@@ -12,7 +12,7 @@ import MetalKit
 
 extension CGImage {
     
-    public func withMutableRawPointer<Result>(_ body: (UnsafeMutableRawPointer) throws -> Result) rethrows -> Result {
+    public func withMutableRawPointer<Result>(_ body: (_ data: UnsafeMutableRawPointer, _ bytesPerRow: Int) throws -> Result) rethrows -> Result {
         
         var imageData: UnsafeMutableRawPointer!
         var dataFromProvider:CFData!
@@ -20,6 +20,7 @@ extension CGImage {
         let width = self.width
         let height = self.height
         let size = CGSize(width: CGFloat(width), height: CGFloat(height))
+        let bytesPerRow = width * 4
         let length = width * height * 4
         var format = MTLPixelFormat.bgra8Unorm
         let needRedraw = !self.isCompatibleWithMetal
@@ -27,7 +28,6 @@ extension CGImage {
         if needRedraw {
             imageData = UnsafeMutableRawPointer.allocate(bytes: length, alignedTo: 4)
             
-            let bytesPerRow = width * 4
             let colorSpace = CGColorSpaceCreateDeviceRGB()
             let alphaInfo = CGImageAlphaInfo.premultipliedLast.rawValue
             let imageBounds = CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height))
@@ -47,7 +47,7 @@ extension CGImage {
             }
         }
         
-        return try body(imageData)
+        return try body(imageData, bytesPerRow)
     }
     
     public var isCompatibleWithMetal:Bool {

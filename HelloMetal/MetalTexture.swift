@@ -30,37 +30,18 @@ class MetalTexture: NSObject {
         
         guard let image = UIImage(contentsOfFile: path)?.cgImage else { return }
         
-        self.width = image.width
-        self.height = image.height
-        
-        let bytesPerRow = width * bytesPerPixel
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue
-        
-        guard let context = CGContext(data: nil,
-                                      width: width,
-                                      height: height,
-                                      bitsPerComponent: bitsPerComponent,
-                                      bytesPerRow: bytesPerRow,
-                                      space: colorSpace,
-                                      bitmapInfo: bitmapInfo) else { return }
-        
-        let bounds = CGRect(x: 0, y: 0, width: width, height: height)
-        context.clear(bounds)
-        
-        if flip == false {
-            context.translateBy(x: 0, y: CGFloat(height))
-            context.scaleBy(x: 1.0, y: -1.0)
+        image.withMutableRawPointer { bytes, bytesPerRow in
+            
+            let texDescriptor = MTLTextureDescriptor()
+                texDescriptor.pixelFormat = .rgba8Unorm
+                texDescriptor.width = image.width
+                texDescriptor.height = image.height
+            
+            self.target = texDescriptor.textureType
+            self.texture = device.makeTexture(descriptor: texDescriptor)
+            
+            let region = MTLRegionMake2D(0, 0, image.width, image.height)
+            self.texture.replace(region: region, mipmapLevel: 0, withBytes: bytes, bytesPerRow: bytesPerRow)
         }
-        
-        context.draw(image, in: bounds)
-        
-        let texDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: MTLPixelFormat.rgba8Unorm, width: width, height: height, mipmapped: false)
-        self.target = texDescriptor.textureType
-        self.texture = device.makeTexture(descriptor: texDescriptor)
-        
-        guard let pixelsData = context.data else { return }
-        let region = MTLRegionMake2D(0, 0, Int(width), Int(height))
-        self.texture.replace(region: region, mipmapLevel: 0, withBytes: pixelsData, bytesPerRow: bytesPerRow)
     }
 }
