@@ -22,7 +22,7 @@ class BufferProvider: NSObject {
 
         for _ in 0...inflightBuffersCount-1{
             let uniformsBuffer = device.makeBuffer(length: sizeOfUniformsBuffer, options: MTLResourceOptions())
-            uniformsBuffers.append(uniformsBuffer)
+            uniformsBuffers.append(uniformsBuffer!)
         }
     }
 

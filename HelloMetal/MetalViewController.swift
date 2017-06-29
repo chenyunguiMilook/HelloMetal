@@ -40,7 +40,7 @@ class MetalViewController: UIViewController {
 
         commandQueue = device.makeCommandQueue()
 
-        let defaultLibrary = device.newDefaultLibrary()
+        let defaultLibrary = device.makeDefaultLibrary()
         let fragmentProgram = defaultLibrary!.makeFunction(name: "basic_fragment")
         let vertexProgram = defaultLibrary!.makeFunction(name: "basic_vertex")
 
@@ -86,7 +86,7 @@ class MetalViewController: UIViewController {
         }
     }
 
-    func newFrame(_ displayLink: CADisplayLink) {
+    @objc func newFrame(_ displayLink: CADisplayLink) {
         if lastFrameTimestamp == 0.0
         {
             lastFrameTimestamp = displayLink.timestamp
