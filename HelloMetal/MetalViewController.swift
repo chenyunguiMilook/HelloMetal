@@ -22,7 +22,6 @@ class MetalViewController: UIViewController {
     
     var metalLayer: CAMetalLayer!
     var timer: CADisplayLink!
-    var projectionMatrix: Matrix4!
     var lastFrameTimestamp: CFTimeInterval = 0.0
     
     weak var metalViewControllerDelegate: MetalViewControllerDelegate?
@@ -30,7 +29,6 @@ class MetalViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.updateProjectionMatrix()
         let device = MTLCreateSystemDefaultDevice()
         self.renderer = Renderer(device: device!)
         
@@ -44,12 +42,6 @@ class MetalViewController: UIViewController {
         timer.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
     }
     
-    internal func updateProjectionMatrix() {
-        let angle = Matrix4.degrees(toRad: 85)
-        let aspect = Float(view.bounds.size.width / view.bounds.size.height)
-        self.projectionMatrix = Matrix4.makePerspectiveViewAngle(angle, aspectRatio: aspect, nearZ: 0.01, farZ: 100.0)
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -60,7 +52,6 @@ class MetalViewController: UIViewController {
         self.view.contentScaleFactor = scale
         self.metalLayer.frame = CGRect(x: 0, y: 0, width: layerSize.width, height: layerSize.height)
         self.metalLayer.drawableSize = CGSize(width: layerSize.width * scale, height: layerSize.height * scale)
-        self.updateProjectionMatrix()
     }
     
     func render() {

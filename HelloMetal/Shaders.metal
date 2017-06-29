@@ -19,22 +19,13 @@ struct VertexOut{
     float2 texCoord;
 };
 
-struct Uniforms{
-    float4x4 modelMatrix;
-    float4x4 projectionMatrix;
-};
-
 vertex VertexOut basic_vertex(device VertexIn* vertex_array [[ buffer(0) ]],
-                              constant Uniforms&  uniforms    [[ buffer(1) ]],
                               unsigned int vid [[ vertex_id ]]) {
-
-    float4x4 mv_Matrix = uniforms.modelMatrix;
-    float4x4 proj_Matrix = uniforms.projectionMatrix;
 
     VertexIn input = vertex_array[vid];
     
     VertexOut output;
-    output.position = proj_Matrix * mv_Matrix * float4(input.position, 1);
+    output.position = float4(input.position, 1);
     output.texCoord = input.texCoord;
     
     return output;

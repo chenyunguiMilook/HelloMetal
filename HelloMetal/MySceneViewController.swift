@@ -9,17 +9,12 @@
 import UIKit
 
 class MySceneViewController: MetalViewController, MetalViewControllerDelegate {
-    var modelViewMatrix: Matrix4!
     
     let panSensivity: Float = 5.0
     var lastPanLocation: CGPoint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        modelViewMatrix = Matrix4()
-        modelViewMatrix.translate(0.0, y: 0.0, z: -4)
-        modelViewMatrix.rotateAroundX(Matrix4.degrees(toRad: 25), y: 0.0, z: 0.0)
         
         metalViewControllerDelegate = self
         
@@ -29,7 +24,7 @@ class MySceneViewController: MetalViewController, MetalViewControllerDelegate {
     // MARK: - MetalViewControllerDelegate
     func renderObjects(in drawable: CAMetalDrawable) {
         
-        self.renderer.render(in: drawable, modelViewMatrix: modelViewMatrix, projectionMatrix: projectionMatrix)
+        self.renderer.render(in: drawable)
     }
     
     func updateLogic(_ timeSinceLastUpdate: CFTimeInterval) {
@@ -45,12 +40,6 @@ class MySceneViewController: MetalViewController, MetalViewControllerDelegate {
     @objc func pan(_ panGesture: UIPanGestureRecognizer) {
         if panGesture.state == UIGestureRecognizerState.changed {
             let pointInView = panGesture.location(in: view)
-            
-            let xDelta = Float((lastPanLocation.x - pointInView.x) / view.bounds.width) * panSensivity
-            let yDelta = Float((lastPanLocation.y - pointInView.y) / view.bounds.height) * panSensivity
-            
-            renderer.model.rotationY -= xDelta
-            renderer.model.rotationX -= yDelta
             lastPanLocation = pointInView
             
         } else if panGesture.state == UIGestureRecognizerState.began {

@@ -7,19 +7,21 @@
 //
 
 import Foundation
+import Metal
+import MetalKit
 
 public class Renderer : NSObject {
 
     var device: MTLDevice!
     var pipelineState: MTLRenderPipelineState!
     var commandQueue: MTLCommandQueue!
-    var model: Cube!
+    var model: Plane!
     
     public init(device: MTLDevice) {
         super.init()
         self.device = device
         self.commandQueue = device.makeCommandQueue()
-        self.model = Cube(device: device, commandQ: commandQueue)
+        self.model = Plane(device: device, commandQ: commandQueue)
         self.compileShader()
     }
     
@@ -41,13 +43,11 @@ public class Renderer : NSObject {
         }
     }
     
-    public func render(in drawable: CAMetalDrawable, modelViewMatrix: Matrix4, projectionMatrix: Matrix4) {
+    public func render(in drawable: CAMetalDrawable) {
         
         self.model.render(commandQueue,
                           pipelineState: pipelineState,
                           drawable: drawable,
-                          parentModelViewMatrix: modelViewMatrix,
-                          projectionMatrix: projectionMatrix,
                           clearColor: nil)
     }
 }
