@@ -26,7 +26,7 @@ class MetalTexture: NSObject {
         super.init()
     }
     
-    func loadTexture(device: MTLDevice, commandQ: MTLCommandQueue, flip: Bool) {
+    func loadTexture(device: MTLDevice, flip: Bool) {
         
         guard let image = UIImage(contentsOfFile: path)?.cgImage else { return }
         

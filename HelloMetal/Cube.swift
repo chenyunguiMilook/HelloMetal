@@ -59,7 +59,7 @@ public class Cube: Node {
 
         //3
         let texture = MetalTexture(resourceName: "cube", ext: "png")
-        texture.loadTexture(device: device, commandQ: commandQ, flip: true)
+        texture.loadTexture(device: device, flip: true)
         
         super.init(name: "Cube", vertices: verticesArray, device: device, texture: texture.texture)
     }
