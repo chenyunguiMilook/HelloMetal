@@ -36,20 +36,8 @@ vertex VertexOut basic_vertex(device VertexIn* vertex_array [[ buffer(0) ]],
     VertexOut VertexOut;
     VertexOut.position = proj_Matrix * mv_Matrix * float4(VertexIn.position, 1);
     
-#define USE_LOOKUP_FIX 0
-#if USE_LOOKUP_FIX
-#define offsetof(st, m) ((size_t)(&((constant st *)0)->m))
-    device float *floats = (device float *)vertex_array;
-    size_t vertexSizeInFloats = sizeof(struct VertexIn) / sizeof(float);
-    size_t texCoordOffsetInFloats = offsetof(struct VertexIn, texCoord)/ sizeof(float);
-    device float *texCoordDirect = floats + (vid * vertexSizeInFloats + texCoordOffsetInFloats);
-    device packed_float2 *texCoordArr = (device packed_float2 *)texCoordDirect;
-    float2 texCoords = texCoordArr[0];
-    VertexOut.texCoord = texCoords;
-#else
     VertexOut.texCoord = VertexIn.texCoord;
-#endif
-
+    
     return VertexOut;
 }
 
