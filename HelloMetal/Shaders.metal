@@ -31,14 +31,13 @@ vertex VertexOut basic_vertex(device VertexIn* vertex_array [[ buffer(0) ]],
     float4x4 mv_Matrix = uniforms.modelMatrix;
     float4x4 proj_Matrix = uniforms.projectionMatrix;
 
-    VertexIn VertexIn = vertex_array[vid];
-
-    VertexOut VertexOut;
-    VertexOut.position = proj_Matrix * mv_Matrix * float4(VertexIn.position, 1);
+    VertexIn input = vertex_array[vid];
     
-    VertexOut.texCoord = VertexIn.texCoord;
+    VertexOut output;
+    output.position = proj_Matrix * mv_Matrix * float4(input.position, 1);
+    output.texCoord = input.texCoord;
     
-    return VertexOut;
+    return output;
 }
 
 fragment float4 basic_fragment(VertexOut interpolated [[stage_in]],
