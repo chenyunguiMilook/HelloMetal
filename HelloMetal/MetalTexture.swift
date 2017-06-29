@@ -10,57 +10,60 @@ import UIKit
 import Metal
 
 class MetalTexture: NSObject {
+    
     var texture: MTLTexture!
-    var target: MTLTextureType!
-    var width: Int!
-    var height: Int!
-    var format: MTLPixelFormat!
+    var target: MTLTextureType = .type2D
+    var width: Int = 0
+    var height: Int = 0
+    var format: MTLPixelFormat = .rgba8Unorm
     var hasAlpha: Bool = true
     var path: String!
     var isMipmaped: Bool = false
     let bytesPerPixel: Int = 4
     let bitsPerComponent: Int = 8
     
-    // MARK: - Creation
     init(resourceName: String, ext: String, mipmaped: Bool) {
         path = Bundle.main.path(forResource: resourceName, ofType: ext)
-        width = 0
-        height = 0
-        format = MTLPixelFormat.rgba8Unorm
-        target = MTLTextureType.type2D
-        texture = nil
         isMipmaped = mipmaped
-        
         super.init()
     }
     
     func loadTexture(device: MTLDevice, commandQ: MTLCommandQueue, flip: Bool) {
-        let image = UIImage(contentsOfFile: path)?.cgImage
+        
+        guard let image = UIImage(contentsOfFile: path)?.cgImage else { return }
+        
+        self.width = image.width
+        self.height = image.height
+        
+        let bytesPerRow = width * bytesPerPixel
         let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue
         
-        width = image?.width
-        height = image?.height
+        guard let context = CGContext(data: nil,
+                                      width: width,
+                                      height: height,
+                                      bitsPerComponent: bitsPerComponent,
+                                      bytesPerRow: bytesPerRow,
+                                      space: colorSpace,
+                                      bitmapInfo: bitmapInfo) else { return }
         
-        let rowBytes = width * bytesPerPixel
-        
-        let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: rowBytes, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
-        let bounds = CGRect(x: 0, y: 0, width: Int(width), height: Int(height))
-        context?.clear(bounds)
+        let bounds = CGRect(x: 0, y: 0, width: width, height: height)
+        context.clear(bounds)
         
         if flip == false {
-            context?.translateBy(x: 0, y: CGFloat(height))
-            context?.scaleBy(x: 1.0, y: -1.0)
+            context.translateBy(x: 0, y: CGFloat(height))
+            context.scaleBy(x: 1.0, y: -1.0)
         }
         
-        context?.draw(image!, in: bounds)
+        context.draw(image, in: bounds)
         
-        let texDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: MTLPixelFormat.rgba8Unorm, width: Int(width), height: Int(height), mipmapped: isMipmaped)
-        target = texDescriptor.textureType
-        texture = device.makeTexture(descriptor: texDescriptor)
+        let texDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: MTLPixelFormat.rgba8Unorm, width: width, height: height, mipmapped: isMipmaped)
+        self.target = texDescriptor.textureType
+        self.texture = device.makeTexture(descriptor: texDescriptor)
         
-        let pixelsData = context?.data
+        guard let pixelsData = context.data else { return }
         let region = MTLRegionMake2D(0, 0, Int(width), Int(height))
-        texture.replace(region: region, mipmapLevel: 0, withBytes: pixelsData!, bytesPerRow: Int(rowBytes))
+        self.texture.replace(region: region, mipmapLevel: 0, withBytes: pixelsData, bytesPerRow: bytesPerRow)
         
         if isMipmaped == true {
             generateMipMapLayersUsingSystemFunc(texture, device: device, commandQ: commandQ, block: { (_) -> Void in
@@ -134,15 +137,13 @@ class MetalTexture: NSObject {
     
     func generateMipMapLayersUsingSystemFunc(_ texture: MTLTexture, device: MTLDevice, commandQ: MTLCommandQueue, block: @escaping MTLCommandBufferHandler) {
         
-        let commandBuffer = commandQ.makeCommandBuffer()
+        guard let commandBuffer = commandQ.makeCommandBuffer() else { return }
+        guard let blitCommandEncoder = commandBuffer.makeBlitCommandEncoder() else { return }
         
-        commandBuffer?.addCompletedHandler(block)
+        blitCommandEncoder.generateMipmaps(for: texture)
+        blitCommandEncoder.endEncoding()
         
-        let blitCommandEncoder = commandBuffer?.makeBlitCommandEncoder()
-        
-        blitCommandEncoder?.generateMipmaps(for: texture)
-        blitCommandEncoder?.endEncoding()
-        
-        commandBuffer?.commit()
+        commandBuffer.addCompletedHandler(block)
+        commandBuffer.commit()
     }
 }
