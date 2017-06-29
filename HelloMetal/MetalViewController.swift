@@ -12,17 +12,13 @@ import QuartzCore
 
 protocol MetalViewControllerDelegate: class {
     
-    func updateLogic(_ timeSinceLastUpdate: CFTimeInterval)
     func renderObjects(in drawable: CAMetalDrawable)
 }
 
 class MetalViewController: UIViewController {
     
     var renderer: Renderer!
-    
     var metalLayer: CAMetalLayer!
-    var timer: CADisplayLink!
-    var lastFrameTimestamp: CFTimeInterval = 0.0
     
     weak var metalViewControllerDelegate: MetalViewControllerDelegate?
     
@@ -37,9 +33,6 @@ class MetalViewController: UIViewController {
         metalLayer.pixelFormat = .bgra8Unorm
         metalLayer.framebufferOnly = true
         view.layer.addSublayer(metalLayer)
-        
-        timer = CADisplayLink(target: self, selector: #selector(MetalViewController.newFrame(_:)))
-        timer.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
     }
     
     override func viewDidLayoutSubviews() {
@@ -54,28 +47,14 @@ class MetalViewController: UIViewController {
         self.metalLayer.drawableSize = CGSize(width: layerSize.width * scale, height: layerSize.height * scale)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.render()
+    }
+    
     func render() {
         if let drawable = metalLayer.nextDrawable() {
             metalViewControllerDelegate?.renderObjects(in: drawable)
-        }
-    }
-    
-    @objc func newFrame(_ displayLink: CADisplayLink) {
-        if lastFrameTimestamp == 0.0 {
-            lastFrameTimestamp = displayLink.timestamp
-        }
-        
-        let elapsed: CFTimeInterval = displayLink.timestamp - lastFrameTimestamp
-        lastFrameTimestamp = displayLink.timestamp
-        
-        gameloop(timeSinceLastUpdate: elapsed)
-    }
-    
-    func gameloop(timeSinceLastUpdate: CFTimeInterval) {
-        metalViewControllerDelegate?.updateLogic(timeSinceLastUpdate)
-        
-        autoreleasepool {
-            self.render()
         }
     }
 }
