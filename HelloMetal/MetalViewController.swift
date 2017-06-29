@@ -18,10 +18,9 @@ protocol MetalViewControllerDelegate: class {
 
 class MetalViewController: UIViewController {
     
-    var device: MTLDevice!
+    var renderer: Renderer!
+    
     var metalLayer: CAMetalLayer!
-    var pipelineState: MTLRenderPipelineState!
-    var commandQueue: MTLCommandQueue!
     var timer: CADisplayLink!
     var projectionMatrix: Matrix4!
     var lastFrameTimestamp: CFTimeInterval = 0.0
@@ -32,36 +31,14 @@ class MetalViewController: UIViewController {
         super.viewDidLoad()
         
         self.updateProjectionMatrix()
-        device = MTLCreateSystemDefaultDevice()
+        let device = MTLCreateSystemDefaultDevice()
+        self.renderer = Renderer(device: device!)
+        
         metalLayer = CAMetalLayer()
         metalLayer.device = device
         metalLayer.pixelFormat = .bgra8Unorm
         metalLayer.framebufferOnly = true
         view.layer.addSublayer(metalLayer)
-        
-        commandQueue = device.makeCommandQueue()
-        
-        let defaultLibrary = device.makeDefaultLibrary()
-        let fragmentProgram = defaultLibrary!.makeFunction(name: "basic_fragment")
-        let vertexProgram = defaultLibrary!.makeFunction(name: "basic_vertex")
-        
-        let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
-        pipelineStateDescriptor.vertexFunction = vertexProgram
-        pipelineStateDescriptor.fragmentFunction = fragmentProgram
-        pipelineStateDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-        pipelineStateDescriptor.colorAttachments[0].isBlendingEnabled = true
-        pipelineStateDescriptor.colorAttachments[0].rgbBlendOperation = MTLBlendOperation.add
-        pipelineStateDescriptor.colorAttachments[0].alphaBlendOperation = MTLBlendOperation.add
-        pipelineStateDescriptor.colorAttachments[0].sourceRGBBlendFactor = MTLBlendFactor.one
-        pipelineStateDescriptor.colorAttachments[0].sourceAlphaBlendFactor = MTLBlendFactor.one
-        pipelineStateDescriptor.colorAttachments[0].destinationRGBBlendFactor = MTLBlendFactor.oneMinusSourceAlpha
-        pipelineStateDescriptor.colorAttachments[0].destinationAlphaBlendFactor = MTLBlendFactor.oneMinusSourceAlpha
-        
-        do {
-            pipelineState = try device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
-        } catch let error as NSError {
-            print("Failed to create pipeline state, error \(error.localizedDescription)")
-        }
         
         timer = CADisplayLink(target: self, selector: #selector(MetalViewController.newFrame(_:)))
         timer.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
