@@ -23,6 +23,9 @@
 		43167D7E19F93B2B00929F8C /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43167D7D19F93B2B00929F8C /* Node.swift */; };
 		4359566D19FA527D00881C62 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4359566C19FA527D00881C62 /* Cube.swift */; };
 		BB368F3E1F04DA1900391492 /* CGImage+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB368F3D1F04DA1900391492 /* CGImage+Behavior.swift */; };
+		BB80E3411F04F91600CE018A /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3401F04F91600CE018A /* Geometry.swift */; };
+		BB80E3431F04F93700CE018A /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3421F04F93700CE018A /* Texture.swift */; };
+		BB80E3451F04FCF300CE018A /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3441F04FCF300CE018A /* Uniforms.swift */; };
 		BBDF9AE81F04DCD4001075DF /* MTLDevice+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDF9AE71F04DCD4001075DF /* MTLDevice+Behavior.swift */; };
 		BBDF9AEA1F04EEFA001075DF /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDF9AE91F04EEFA001075DF /* Renderer.swift */; };
 		BEFF60611C49B9C6004EECB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFF60601C49B9C6004EECB9 /* AppDelegate.swift */; };
@@ -73,6 +76,9 @@
 		43167D7D19F93B2B00929F8C /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Node.swift; path = HelloMetal/Node.swift; sourceTree = "<group>"; };
 		4359566C19FA527D00881C62 /* Cube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cube.swift; path = HelloMetal/Cube.swift; sourceTree = "<group>"; };
 		BB368F3D1F04DA1900391492 /* CGImage+Behavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImage+Behavior.swift"; sourceTree = "<group>"; };
+		BB80E3401F04F91600CE018A /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
+		BB80E3421F04F93700CE018A /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
+		BB80E3441F04FCF300CE018A /* Uniforms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uniforms.swift; sourceTree = "<group>"; };
 		BBDF9AE71F04DCD4001075DF /* MTLDevice+Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MTLDevice+Behavior.swift"; sourceTree = "<group>"; };
 		BBDF9AE91F04EEFA001075DF /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		BEFF605E1C49B9C6004EECB9 /* HelloMetalOSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloMetalOSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,6 +184,9 @@
 				43167D7B19F93AA100929F8C /* Vertex.swift */,
 				43167D7D19F93B2B00929F8C /* Node.swift */,
 				4359566C19FA527D00881C62 /* Cube.swift */,
+				BB80E3401F04F91600CE018A /* Geometry.swift */,
+				BB80E3421F04F93700CE018A /* Texture.swift */,
+				BB80E3441F04FCF300CE018A /* Uniforms.swift */,
 				0C9DA0AC1AD7CD6200126EC2 /* BufferProvider.swift */,
 				BBDF9AE91F04EEFA001075DF /* Renderer.swift */,
 				43167D7819F9371D00929F8C /* Matrix4.h */,
@@ -354,11 +363,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				35023C6619DDBB29006F3266 /* Shaders.metal in Sources */,
+				BB80E3431F04F93700CE018A /* Texture.swift in Sources */,
+				BB80E3411F04F91600CE018A /* Geometry.swift in Sources */,
 				43167D7A19F9371D00929F8C /* Matrix4.m in Sources */,
 				0C9DA0AD1AD7CD6200126EC2 /* BufferProvider.swift in Sources */,
 				BBDF9AE81F04DCD4001075DF /* MTLDevice+Behavior.swift in Sources */,
 				43167D7E19F93B2B00929F8C /* Node.swift in Sources */,
 				BBDF9AEA1F04EEFA001075DF /* Renderer.swift in Sources */,
+				BB80E3451F04FCF300CE018A /* Uniforms.swift in Sources */,
 				4359566D19FA527D00881C62 /* Cube.swift in Sources */,
 				0C9DA0B11AD7D1DF00126EC2 /* MetalTexture.swift in Sources */,
 				0C49914D1A7278730028ECBB /* MySceneViewController.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import Metal
 
-public class BufferProvider: NSObject {
+public class BufferProvider<T>: NSObject {
     
     fileprivate var uniformsBuffers: [MTLBuffer]
     fileprivate var avaliableBufferIndex: Int = 0
@@ -16,14 +16,14 @@ public class BufferProvider: NSObject {
     internal let inflightBuffersCount: Int
     internal var avaliableResourcesSemaphore: DispatchSemaphore
     
-    public init(device: MTLDevice, inflightBuffersCount: Int, sizeOfUniformsBuffer: Int) {
+    public init(device: MTLDevice, inflightBuffersCount: Int = 3) {
         avaliableResourcesSemaphore = DispatchSemaphore(value: inflightBuffersCount)
         
         self.inflightBuffersCount = inflightBuffersCount
         uniformsBuffers = [MTLBuffer]()
         
-        for _ in 0...inflightBuffersCount - 1 {
-            let uniformsBuffer = device.makeBuffer(length: sizeOfUniformsBuffer, options: MTLResourceOptions())
+        for _ in 0 ..< inflightBuffersCount {
+            let uniformsBuffer = device.makeBuffer(length: MemoryLayout<T>.size, options: [])
             uniformsBuffers.append(uniformsBuffer!)
         }
     }
@@ -34,12 +34,10 @@ public class BufferProvider: NSObject {
         }
     }
     
-    func nextUniformsBuffer(_ projectionMatrix: Matrix4, modelViewMatrix: Matrix4) -> MTLBuffer {
+    func nextUniformsBuffer(of uniform: inout T) -> MTLBuffer {
         let buffer = uniformsBuffers[avaliableBufferIndex]
         let bufferPointer = buffer.contents()
-        
-        memcpy(bufferPointer, modelViewMatrix.raw(), MemoryLayout<Float>.size * Matrix4.numberOfElements())
-        memcpy(bufferPointer + MemoryLayout<Float>.size * Matrix4.numberOfElements(), projectionMatrix.raw(), MemoryLayout<Float>.size * Matrix4.numberOfElements())
+        memcpy(bufferPointer, &uniform, MemoryLayout<T>.size)
         
         avaliableBufferIndex += 1
         if avaliableBufferIndex == inflightBuffersCount {

@@ -9,6 +9,7 @@
 import Foundation
 import Metal
 import QuartzCore
+import simd
 
 public class Node {
     
@@ -28,7 +29,7 @@ public class Node {
     var rotationZ: Float = 0.0
     var scale: Float = 1.0
     
-    var bufferProvider: BufferProvider
+    var bufferProvider: BufferProvider<Uniforms>
     var texture: MTLTexture
     lazy var samplerState: MTLSamplerState? = self.device.defaultSampler
     
@@ -40,14 +41,14 @@ public class Node {
         }
         
         let dataSize = vertexData.count * MemoryLayout<Float>.size
-        vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: MTLResourceOptions())!
+        self.vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: [])!
         
         self.name = name
         self.device = device
         self.vertexCount = vertices.count
         self.texture = texture
         
-        self.bufferProvider = BufferProvider(device: device, inflightBuffersCount: 3, sizeOfUniformsBuffer: MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2)
+        self.bufferProvider = BufferProvider<Uniforms>(device: device)
     }
     
     public func render(_ commandQueue: MTLCommandQueue,
@@ -84,7 +85,8 @@ public class Node {
         let nodeModelMatrix = self.modelMatrix()
         nodeModelMatrix.multiplyLeft(parentModelViewMatrix)
         
-        let uniformBuffer = bufferProvider.nextUniformsBuffer(projectionMatrix, modelViewMatrix: nodeModelMatrix)
+        var uniform = Uniforms(modelMatrix: nodeModelMatrix.matrix, projectionMatrix: projectionMatrix.matrix)
+        let uniformBuffer = bufferProvider.nextUniformsBuffer(of: &uniform)
         
         renderEncoder.setVertexBuffer(uniformBuffer, offset: 0, index: 1)
         renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertexCount)
@@ -106,3 +108,18 @@ public class Node {
         self.time += delta
     }
 }
+
+extension Matrix4 {
+    
+    public var matrix: matrix_float4x4 {
+        let pointer = self.raw().assumingMemoryBound(to: matrix_float4x4.self)
+        return pointer.pointee
+    }
+}
+
+
+
+
+
+
+
