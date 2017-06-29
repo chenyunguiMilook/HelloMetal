@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C49914C1A7278730028ECBB /* MetalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C49914A1A7278730028ECBB /* MetalViewController.swift */; };
 		0C49914D1A7278730028ECBB /* MySceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C49914B1A7278730028ECBB /* MySceneViewController.swift */; };
 		0C9DA0AD1AD7CD6200126EC2 /* BufferProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9DA0AC1AD7CD6200126EC2 /* BufferProvider.swift */; };
 		0C9DA0B11AD7D1DF00126EC2 /* MetalTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9DA0B01AD7D1DF00126EC2 /* MetalTexture.swift */; };
@@ -53,7 +52,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0C49914A1A7278730028ECBB /* MetalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalViewController.swift; sourceTree = "<group>"; };
 		0C49914B1A7278730028ECBB /* MySceneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySceneViewController.swift; sourceTree = "<group>"; };
 		0C9DA0AC1AD7CD6200126EC2 /* BufferProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferProvider.swift; path = HelloMetal/BufferProvider.swift; sourceTree = "<group>"; };
 		0C9DA0B01AD7D1DF00126EC2 /* MetalTexture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalTexture.swift; sourceTree = "<group>"; };
@@ -140,7 +138,6 @@
 			children = (
 				35023C4519DDB96F006F3266 /* AppDelegate.swift */,
 				0C9DA0B01AD7D1DF00126EC2 /* MetalTexture.swift */,
-				0C49914A1A7278730028ECBB /* MetalViewController.swift */,
 				0C49914B1A7278730028ECBB /* MySceneViewController.swift */,
 				35023C4C19DDB970006F3266 /* Images.xcassets */,
 				35023C4E19DDB970006F3266 /* LaunchScreen.xib */,
@@ -373,7 +370,6 @@
 				0C49914D1A7278730028ECBB /* MySceneViewController.swift in Sources */,
 				43167D7C19F93AA100929F8C /* Vertex.swift in Sources */,
 				BB368F3E1F04DA1900391492 /* CGImage+Behavior.swift in Sources */,
-				0C49914C1A7278730028ECBB /* MetalViewController.swift in Sources */,
 				35023C4619DDB96F006F3266 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
