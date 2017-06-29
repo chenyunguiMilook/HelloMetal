@@ -13,7 +13,7 @@ import QuartzCore
 protocol MetalViewControllerDelegate: class {
     
     func updateLogic(_ timeSinceLastUpdate: CFTimeInterval)
-    func renderObjects(_ drawable: CAMetalDrawable)
+    func renderObjects(in drawable: CAMetalDrawable)
 }
 
 class MetalViewController: UIViewController {
@@ -31,8 +31,7 @@ class MetalViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        projectionMatrix = Matrix4.makePerspectiveViewAngle(Matrix4.degrees(toRad: 85.0), aspectRatio: Float(view.bounds.size.width / view.bounds.size.height), nearZ: 0.01, farZ: 100.0)
-        
+        self.updateProjectionMatrix()
         device = MTLCreateSystemDefaultDevice()
         metalLayer = CAMetalLayer()
         metalLayer.device = device
@@ -68,23 +67,28 @@ class MetalViewController: UIViewController {
         timer.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
     }
     
+    internal func updateProjectionMatrix() {
+        let angle = Matrix4.degrees(toRad: 85)
+        let aspect = Float(view.bounds.size.width / view.bounds.size.height)
+        self.projectionMatrix = Matrix4.makePerspectiveViewAngle(angle, aspectRatio: aspect, nearZ: 0.01, farZ: 100.0)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if let window = view.window {
-            let scale = window.screen.nativeScale
-            let layerSize = view.bounds.size
-            
-            view.contentScaleFactor = scale
-            metalLayer.frame = CGRect(x: 0, y: 0, width: layerSize.width, height: layerSize.height)
-            metalLayer.drawableSize = CGSize(width: layerSize.width * scale, height: layerSize.height * scale)
-        }
-        projectionMatrix = Matrix4.makePerspectiveViewAngle(Matrix4.degrees(toRad: 85.0), aspectRatio: Float(view.bounds.size.width / view.bounds.size.height), nearZ: 0.01, farZ: 100.0)
+        guard let window = view.window else { return }
+        let scale = window.screen.nativeScale
+        let layerSize = view.bounds.size
+        
+        self.view.contentScaleFactor = scale
+        self.metalLayer.frame = CGRect(x: 0, y: 0, width: layerSize.width, height: layerSize.height)
+        self.metalLayer.drawableSize = CGSize(width: layerSize.width * scale, height: layerSize.height * scale)
+        self.updateProjectionMatrix()
     }
     
     func render() {
         if let drawable = metalLayer.nextDrawable() {
-            metalViewControllerDelegate?.renderObjects(drawable)
+            metalViewControllerDelegate?.renderObjects(in: drawable)
         }
     }
     
