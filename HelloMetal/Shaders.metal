@@ -11,13 +11,11 @@ using namespace metal;
 
 struct VertexIn{
     packed_float3 position;
-    packed_float4 color;
     packed_float2 texCoord;
 };
 
 struct VertexOut{
     float4 position [[position]];
-    float4 color;
     float2 texCoord;
 };
 
@@ -37,8 +35,7 @@ vertex VertexOut basic_vertex(device VertexIn* vertex_array [[ buffer(0) ]],
 
     VertexOut VertexOut;
     VertexOut.position = proj_Matrix * mv_Matrix * float4(VertexIn.position, 1);
-    VertexOut.color = VertexIn.color;
-
+    
 #define USE_LOOKUP_FIX 0
 #if USE_LOOKUP_FIX
 #define offsetof(st, m) ((size_t)(&((constant st *)0)->m))
