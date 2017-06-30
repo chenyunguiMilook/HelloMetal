@@ -13,10 +13,10 @@ public class Plane: Node {
     
     public init(device: MTLDevice) {
         //Front
-        let A = Vertex(x: -1.0, y:   1.0, z:   0, s: 0, t: 1)
-        let B = Vertex(x: -1.0, y:  -1.0, z:   0, s: 0, t: 0)
-        let C = Vertex(x:  1.0, y:  -1.0, z:   0, s: 1, t: 0)
-        let D = Vertex(x:  1.0, y:   1.0, z:   0, s: 1, t: 1)
+        let A = Vertex(x: -1.0, y:   1.0, z:   0)
+        let B = Vertex(x: -1.0, y:  -1.0, z:   0)
+        let C = Vertex(x:  1.0, y:  -1.0, z:   0)
+        let D = Vertex(x:  1.0, y:   1.0, z:   0)
         
         // 2
         let verticesArray:Array<Vertex> = [
