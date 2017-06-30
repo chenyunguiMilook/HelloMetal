@@ -11,7 +11,7 @@ import Metal
 
 public class Plane: Node {
     
-    public init(device: MTLDevice, commandQ: MTLCommandQueue) {
+    public init(device: MTLDevice) {
         //Front
         let A = Vertex(x: -1.0, y:   1.0, z:   0, s: 0, t: 1)
         let B = Vertex(x: -1.0, y:  -1.0, z:   0, s: 0, t: 0)
