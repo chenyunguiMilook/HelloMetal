@@ -23,7 +23,7 @@ public class Model {
     internal var avaliableResourcesSemaphore: DispatchSemaphore
     
     deinit {
-        for i in 0 ..< availableSources {
+        for _ in 0 ..< availableSources {
             self.avaliableResourcesSemaphore.signal()
         }
     }
