@@ -15,18 +15,16 @@ public class Renderer : NSObject {
     var device: MTLDevice!
     var pipelineState: MTLRenderPipelineState!
     var commandQueue: MTLCommandQueue!
-    var model: Plane!
-//    var model: ModelPlane!
+    var model: ModelPlane!
     
     public init(device: MTLDevice) {
         super.init()
         self.device = device
         self.commandQueue = device.makeCommandQueue()
-        self.model = Plane(device: device)
         
-//        let texture = MetalTexture(resourceName: "cube", ext: "png")
-//            texture.loadTexture(device: device, flip: true)
-//        self.model = ModelPlane(device: device, texture: texture.texture)
+        let texture = MetalTexture(resourceName: "cube", ext: "png")
+            texture.loadTexture(device: device, flip: true)
+        self.model = ModelPlane(device: device, texture: texture.texture)
         
         self.compileShader()
     }

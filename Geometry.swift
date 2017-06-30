@@ -48,9 +48,15 @@ public class GeometryContainer {
     
     public init(geometry: Geometry, device: MTLDevice) {
         self.geometry = geometry
-        self.vertexBuffer = device.makeBuffer(bytes: &geometry.vertices, length: geometry.verticesSize, options: .cpuCacheModeWriteCombined)
-        self.uvBuffer = device.makeBuffer(bytes: &geometry.uvs, length: geometry.uvsSize, options: .cpuCacheModeWriteCombined)
-        self.indexBuffer = device.makeBuffer(bytes: &geometry.indices, length: geometry.indexSize, options: .cpuCacheModeWriteCombined)
+        
+        var vertices: [Float] = geometry.vertices.map{ [$0.x, $0.y, $0.z] }.flatMap{ $0 }
+        self.vertexBuffer = device.makeBuffer(bytes: &vertices, length: geometry.verticesSize, options: .cpuCacheModeWriteCombined)
+        
+        var uvs: [Float] = geometry.uvs.map{ [$0.x, $0.y] }.flatMap{ $0 }
+        self.uvBuffer = device.makeBuffer(bytes: &uvs, length: geometry.uvsSize, options: .cpuCacheModeWriteCombined)
+        
+        var indices: [UInt32] = geometry.indices.map{ [$0.x, $0.y, $0.z] }.flatMap{ $0 }
+        self.indexBuffer = device.makeBuffer(bytes: &indices, length: geometry.indexSize, options: .cpuCacheModeWriteCombined)
     }
 }
 
