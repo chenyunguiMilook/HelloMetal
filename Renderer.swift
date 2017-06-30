@@ -16,6 +16,7 @@ public class Renderer : NSObject {
     var pipelineState: MTLRenderPipelineState!
     var commandQueue: MTLCommandQueue!
     var model: Plane!
+//    var model: ModelPlane!
     
     public init(device: MTLDevice) {
         super.init()

@@ -41,26 +41,16 @@ extension Geometry {
 public class GeometryContainer {
     
     public var geometry: Geometry
-    public var vertexBufferProvider: BufferProvider<[float3]>
-    public var uvBufferProvider: BufferProvider<[float2]>
-    public var indexCount: Int { return geometry.indices.count }
+    public var vertexBuffer: MTLBuffer!
+    public var uvBuffer: MTLBuffer!
     public var indexBuffer: MTLBuffer!
+    public var indexCount: Int { return geometry.indices.count }
     
     public init(geometry: Geometry, device: MTLDevice) {
         self.geometry = geometry
-        self.vertexBufferProvider = BufferProvider<[float3]>(device: device, bufferLength: geometry.verticesSize)
-        self.uvBufferProvider = BufferProvider<[float2]>(device: device, bufferLength: geometry.uvsSize)
-        self.indexBuffer = device.makeBuffer(length: geometry.indexSize, options: [])
-        let indexBufferPointer = self.indexBuffer.contents()
-        memcpy(indexBufferPointer, &geometry.indices, geometry.indexSize)
-    }
-    
-    public var nextVertexBuffer: MTLBuffer {
-        return self.vertexBufferProvider.nextUniformsBuffer(of: &geometry.vertices)
-    }
-    
-    public var nextUVBuffer: MTLBuffer {
-        return self.uvBufferProvider.nextUniformsBuffer(of: &geometry.uvs)
+        self.vertexBuffer = device.makeBuffer(bytes: &geometry.vertices, length: geometry.verticesSize, options: .cpuCacheModeWriteCombined)
+        self.uvBuffer = device.makeBuffer(bytes: &geometry.uvs, length: geometry.uvsSize, options: .cpuCacheModeWriteCombined)
+        self.indexBuffer = device.makeBuffer(bytes: &geometry.indices, length: geometry.indexSize, options: .cpuCacheModeWriteCombined)
     }
 }
 

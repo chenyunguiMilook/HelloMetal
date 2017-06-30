@@ -59,8 +59,8 @@ public class Model {
             return
         }
         renderEncoder.setRenderPipelineState(pipelineState)
-        renderEncoder.setVertexBuffer(self.geometry.nextVertexBuffer, offset: 0, index: 0)
-        renderEncoder.setVertexBuffer(self.geometry.nextUVBuffer, offset: 0, index: 1)
+        renderEncoder.setVertexBuffer(self.geometry.vertexBuffer, offset: 0, index: 0)
+        renderEncoder.setVertexBuffer(self.geometry.uvBuffer, offset: 0, index: 1)
         renderEncoder.setFragmentTexture(self.texture, index: 0)
         if let samplerState = samplerState {
             renderEncoder.setFragmentSamplerState(samplerState, index: 0)
