@@ -20,7 +20,7 @@ public class Plane: Node {
         
         // 2
         let verticesArray:Array<Vertex> = [
-            A,B,C ,A,C,D,   //Front
+            A,B,C,D,   //Front
         ]
         
         let E = UV(x: 0, y: 1)
@@ -28,9 +28,9 @@ public class Plane: Node {
         let G = UV(x: 1, y: 0)
         let H = UV(x: 1, y: 1)
         
-        let uvArray: [UV] = [E, F, G, E, G, H]
+        let uvArray: [UV] = [E, F, G, H]
         let I = Indices(x: 0, y: 1, z: 2)
-        let J = Indices(x: 1, y: 3, z: 2)
+        let J = Indices(x: 0, y: 2, z: 3)
         let indexArray: [Indices] = [I, J]
         
         //3

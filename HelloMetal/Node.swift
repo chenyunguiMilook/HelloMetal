@@ -17,6 +17,7 @@ public class Node {
     
     let name: String
     var vertexCount: Int
+    var indicesCount: Int
     
     var vertexBuffer: MTLBuffer
     var uvsBuffer: MTLBuffer
@@ -50,6 +51,7 @@ public class Node {
         }
         let indexDataSize = indexData.count * MemoryLayout<UInt32>.size
         self.indexBuffer = device.makeBuffer(bytes: indexData, length: indexDataSize, options: [])!
+        self.indicesCount = indexData.count
         
         self.name = name
         self.device = device
@@ -89,7 +91,8 @@ public class Node {
             renderEncoder.setFragmentSamplerState(samplerState, index: 0)
         }
         
-        renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertexCount)
+        //renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertexCount)
+        renderEncoder.drawIndexedPrimitives(type: .triangle, indexCount: indicesCount, indexType: .uint32, indexBuffer: indexBuffer, indexBufferOffset: 0)
         renderEncoder.endEncoding()
         
         // the present target could be a MTLTexture
