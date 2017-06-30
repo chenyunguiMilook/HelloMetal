@@ -25,6 +25,9 @@
 		BB80E3431F04F93700CE018A /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3421F04F93700CE018A /* Texture.swift */; };
 		BB80E3451F04FCF300CE018A /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3441F04FCF300CE018A /* Uniforms.swift */; };
 		BB80E3471F05071E00CE018A /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3461F05071E00CE018A /* Plane.swift */; };
+		BB80E3491F0514B500CE018A /* GeometryPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3481F0514B500CE018A /* GeometryPlane.swift */; };
+		BB80E34B1F05168000CE018A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E34A1F05168000CE018A /* Model.swift */; };
+		BB80E34D1F05270700CE018A /* ModelPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E34C1F05270700CE018A /* ModelPlane.swift */; };
 		BBDF9AE81F04DCD4001075DF /* MTLDevice+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDF9AE71F04DCD4001075DF /* MTLDevice+Behavior.swift */; };
 		BBDF9AEA1F04EEFA001075DF /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDF9AE91F04EEFA001075DF /* Renderer.swift */; };
 		BEFF60611C49B9C6004EECB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFF60601C49B9C6004EECB9 /* AppDelegate.swift */; };
@@ -75,6 +78,9 @@
 		BB80E3421F04F93700CE018A /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
 		BB80E3441F04FCF300CE018A /* Uniforms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uniforms.swift; sourceTree = "<group>"; };
 		BB80E3461F05071E00CE018A /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
+		BB80E3481F0514B500CE018A /* GeometryPlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryPlane.swift; sourceTree = "<group>"; };
+		BB80E34A1F05168000CE018A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		BB80E34C1F05270700CE018A /* ModelPlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPlane.swift; sourceTree = "<group>"; };
 		BBDF9AE71F04DCD4001075DF /* MTLDevice+Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MTLDevice+Behavior.swift"; sourceTree = "<group>"; };
 		BBDF9AE91F04EEFA001075DF /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		BEFF605E1C49B9C6004EECB9 /* HelloMetalOSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloMetalOSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +187,9 @@
 				4359566C19FA527D00881C62 /* Cube.swift */,
 				BB80E3461F05071E00CE018A /* Plane.swift */,
 				BB80E3401F04F91600CE018A /* Geometry.swift */,
+				BB80E3481F0514B500CE018A /* GeometryPlane.swift */,
+				BB80E34A1F05168000CE018A /* Model.swift */,
+				BB80E34C1F05270700CE018A /* ModelPlane.swift */,
 				BB80E3421F04F93700CE018A /* Texture.swift */,
 				BB80E3441F04FCF300CE018A /* Uniforms.swift */,
 				0C9DA0AC1AD7CD6200126EC2 /* BufferProvider.swift */,
@@ -360,12 +369,15 @@
 				BB80E3431F04F93700CE018A /* Texture.swift in Sources */,
 				BB80E3411F04F91600CE018A /* Geometry.swift in Sources */,
 				BB80E3471F05071E00CE018A /* Plane.swift in Sources */,
+				BB80E34D1F05270700CE018A /* ModelPlane.swift in Sources */,
 				0C9DA0AD1AD7CD6200126EC2 /* BufferProvider.swift in Sources */,
 				BBDF9AE81F04DCD4001075DF /* MTLDevice+Behavior.swift in Sources */,
 				43167D7E19F93B2B00929F8C /* Node.swift in Sources */,
 				BBDF9AEA1F04EEFA001075DF /* Renderer.swift in Sources */,
 				BB80E3451F04FCF300CE018A /* Uniforms.swift in Sources */,
 				4359566D19FA527D00881C62 /* Cube.swift in Sources */,
+				BB80E34B1F05168000CE018A /* Model.swift in Sources */,
+				BB80E3491F0514B500CE018A /* GeometryPlane.swift in Sources */,
 				0C9DA0B11AD7D1DF00126EC2 /* MetalTexture.swift in Sources */,
 				0C49914D1A7278730028ECBB /* MySceneViewController.swift in Sources */,
 				43167D7C19F93AA100929F8C /* Vertex.swift in Sources */,
