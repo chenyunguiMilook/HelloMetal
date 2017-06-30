@@ -19,7 +19,14 @@ public class Model {
     var texture: MTLTexture
     
     lazy var samplerState: MTLSamplerState? = self.device.defaultSampler
+    let availableSources: Int = 3
     internal var avaliableResourcesSemaphore: DispatchSemaphore
+    
+    deinit {
+        for i in 0 ..< availableSources {
+            self.avaliableResourcesSemaphore.signal()
+        }
+    }
     
     public init(name: String, device: MTLDevice, geometry: Geometry, texture: MTLTexture) {
         
@@ -27,7 +34,7 @@ public class Model {
         self.device = device
         self.geometry = GeometryContainer(geometry: geometry, device: device)
         self.texture = texture
-        self.avaliableResourcesSemaphore = DispatchSemaphore(value: 3)
+        self.avaliableResourcesSemaphore = DispatchSemaphore(value: availableSources)
     }
     
     public func render(_ commandQueue: MTLCommandQueue,
