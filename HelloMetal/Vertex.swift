@@ -23,3 +23,12 @@ public struct UV {
         return [x, y]
     }
 }
+
+
+public struct Indices {
+    var x, y, z: UInt32
+    
+    public func intBuffer() -> [UInt32] {
+        return [x, y, z]
+    }
+}

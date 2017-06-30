@@ -17,21 +17,23 @@ public class Node {
     
     let name: String
     var vertexCount: Int
+    
     var vertexBuffer: MTLBuffer
     var uvsBuffer: MTLBuffer
+    var indexBuffer: MTLBuffer
+    
     var device: MTLDevice
     
     var bufferProvider: BufferProvider<Uniforms>
     var texture: MTLTexture
     lazy var samplerState: MTLSamplerState? = self.device.defaultSampler
     
-    public init(name: String, vertices: [Vertex], uvs: [UV], device: MTLDevice, texture: MTLTexture) {
+    public init(name: String, vertices: [Vertex], uvs: [UV], indices: [Indices], device: MTLDevice, texture: MTLTexture) {
         
         var vertexData = [Float]()
         for vertex in vertices {
             vertexData += vertex.floatBuffer()
         }
-        
         let dataSize = vertexData.count * MemoryLayout<Float>.size
         self.vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: [])!
         
@@ -41,6 +43,13 @@ public class Node {
         }
         let uvDataSize = uvData.count * MemoryLayout<Float>.size
         self.uvsBuffer = device.makeBuffer(bytes: uvData, length: uvDataSize, options: [])!
+        
+        var indexData = [UInt32]()
+        for index in indices {
+            indexData += index.intBuffer()
+        }
+        let indexDataSize = indexData.count * MemoryLayout<UInt32>.size
+        self.indexBuffer = device.makeBuffer(bytes: indexData, length: indexDataSize, options: [])!
         
         self.name = name
         self.device = device
