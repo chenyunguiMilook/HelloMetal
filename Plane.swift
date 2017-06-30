@@ -23,10 +23,17 @@ public class Plane: Node {
             A,B,C ,A,C,D,   //Front
         ]
         
+        let E = UV(x: 0, y: 1)
+        let F = UV(x: 0, y: 0)
+        let G = UV(x: 1, y: 0)
+        let H = UV(x: 1, y: 1)
+        
+        let uvArray: [UV] = [E, F, G, E, G, H]
+        
         //3
         let texture = MetalTexture(resourceName: "cube", ext: "png")
         texture.loadTexture(device: device, flip: true)
         
-        super.init(name: "Cube", vertices: verticesArray, device: device, texture: texture.texture)
+        super.init(name: "Cube", vertices: verticesArray, uvs: uvArray, device: device, texture: texture.texture)
     }
 }

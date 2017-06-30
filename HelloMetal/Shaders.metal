@@ -14,19 +14,25 @@ struct VertexIn{
     packed_float2 texCoord;
 };
 
+struct UVIn{
+    packed_float2 uv;
+};
+
 struct VertexOut{
     float4 position [[position]];
     float2 texCoord;
 };
 
 vertex VertexOut basic_vertex(device VertexIn* vertex_array [[ buffer(0) ]],
+                              device UVIn* uv_array [[ buffer(1) ]],
                               unsigned int vid [[ vertex_id ]]) {
 
     VertexIn input = vertex_array[vid];
+    UVIn uvInput = uv_array[vid];
     
     VertexOut output;
     output.position = float4(input.position, 1);
-    output.texCoord = input.texCoord;
+    output.texCoord = uvInput.uv;
     
     return output;
 }

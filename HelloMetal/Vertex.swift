@@ -15,3 +15,12 @@ public struct Vertex {
         return [x, y, z, s, t]
     }
 }
+
+
+public struct UV {
+    var x, y: Float
+    
+    public func floatBuffer() -> [Float] {
+        return [x, y]
+    }
+}

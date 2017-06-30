@@ -18,13 +18,14 @@ public class Node {
     let name: String
     var vertexCount: Int
     var vertexBuffer: MTLBuffer
+    var uvsBuffer: MTLBuffer
     var device: MTLDevice
     
     var bufferProvider: BufferProvider<Uniforms>
     var texture: MTLTexture
     lazy var samplerState: MTLSamplerState? = self.device.defaultSampler
     
-    public init(name: String, vertices: [Vertex], device: MTLDevice, texture: MTLTexture) {
+    public init(name: String, vertices: [Vertex], uvs: [UV], device: MTLDevice, texture: MTLTexture) {
         
         var vertexData = [Float]()
         for vertex in vertices {
@@ -33,6 +34,13 @@ public class Node {
         
         let dataSize = vertexData.count * MemoryLayout<Float>.size
         self.vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: [])!
+        
+        var uvData = [Float]()
+        for uv in uvs {
+            uvData += uv.floatBuffer()
+        }
+        let uvDataSize = uvData.count * MemoryLayout<Float>.size
+        self.uvsBuffer = device.makeBuffer(bytes: uvData, length: uvDataSize, options: [])!
         
         self.name = name
         self.device = device
@@ -66,6 +74,7 @@ public class Node {
         
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
+        renderEncoder.setVertexBuffer(self.uvsBuffer, offset: 0, index: 1)
         renderEncoder.setFragmentTexture(self.texture, index: 0)
         if let samplerState = samplerState {
             renderEncoder.setFragmentSamplerState(samplerState, index: 0)
