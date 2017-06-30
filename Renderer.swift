@@ -22,6 +22,11 @@ public class Renderer : NSObject {
         self.device = device
         self.commandQueue = device.makeCommandQueue()
         self.model = Plane(device: device, commandQ: commandQueue)
+        
+//        let texture = MetalTexture(resourceName: "cube", ext: "png")
+//            texture.loadTexture(device: device, flip: true)
+//        self.model = ModelPlane(device: device, texture: texture.texture)
+        
         self.compileShader()
     }
     

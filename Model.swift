@@ -66,7 +66,11 @@ public class Model {
             renderEncoder.setFragmentSamplerState(samplerState, index: 0)
         }
         
-        renderEncoder.drawIndexedPrimitives(type: .triangle, indexCount: geometry.indexCount, indexType: .uint32, indexBuffer: geometry.indexBuffer, indexBufferOffset: 0)
+        renderEncoder.drawIndexedPrimitives(type: .triangle,
+                                            indexCount: geometry.indexCount * 3,
+                                            indexType: .uint32,
+                                            indexBuffer: geometry.indexBuffer,
+                                            indexBufferOffset: 0)
         renderEncoder.endEncoding()
         
         // the present target could be a MTLTexture

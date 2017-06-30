@@ -27,7 +27,7 @@ public class GeometryPlane : Geometry {
         var uvs = [float2](repeating: float2(0, 0), count: verticesCount)
         
         let faceCount = (width-1) * (height-1) * 2
-        var faces = [int3](repeating: int3(0, 0, 0), count: faceCount)
+        var indices = [uint3](repeating: uint3(0, 0, 0), count: faceCount)
         
         var index = 0
         let fw = Float(width)
@@ -51,77 +51,77 @@ public class GeometryPlane : Geometry {
         }
         
         index = 0 // reset index for calculate face indices
-        let uw = Int32(width)
+        let uw = UInt32(width)
         
         for i in 0 ..< height-1 {
             
             for j in 0 ..< width {
                 
-                let ui = Int32(i)
-                let uj = Int32(j)
+                let ui = UInt32(i)
+                let uj = UInt32(j)
                 
                 if i%2 == 0 {
                     // emit extra index to create degenerate triangle
                     if (j == 0) {
-                        faces[index].x = ui*uw+uj
-                        faces[index].y = ui*uw+uj+1
-                        faces[index].z = (ui+1)*uw+uj
+                        indices[index].x = ui*uw+uj
+                        indices[index].y = ui*uw+uj+1
+                        indices[index].z = (ui+1)*uw+uj
                         index += 1
                         continue
                     }
                     
                     // emit extra index to create degenerate triangle
                     if (j == (width-1)) {
-                        faces[index].x = ui*uw+uj
-                        faces[index].y = (ui+1)*uw+uj
-                        faces[index].z = (ui+1)*uw+uj-1
+                        indices[index].x = ui*uw+uj
+                        indices[index].y = (ui+1)*uw+uj
+                        indices[index].z = (ui+1)*uw+uj-1
                         index += 1
                         continue
                     }
                     
-                    faces[index].x = ui*uw+uj
-                    faces[index].y = ui*uw+uj+1
-                    faces[index].z = (ui+1)*uw+uj
+                    indices[index].x = ui*uw+uj
+                    indices[index].y = ui*uw+uj+1
+                    indices[index].z = (ui+1)*uw+uj
                     index += 1
                     
-                    faces[index].x = ui*uw+uj
-                    faces[index].y = (ui+1)*uw+uj
-                    faces[index].z = (ui+1)*uw+uj-1
+                    indices[index].x = ui*uw+uj
+                    indices[index].y = (ui+1)*uw+uj
+                    indices[index].z = (ui+1)*uw+uj-1
                     index += 1
                     
                 } else {
                     // emit extra index to create degenerate triangle
                     if (j == 0) {
-                        faces[index].x = ui*uw+uj
-                        faces[index].y = ui*uw+uj+1
-                        faces[index].z = (ui+1)*uw+uj
+                        indices[index].x = ui*uw+uj
+                        indices[index].y = ui*uw+uj+1
+                        indices[index].z = (ui+1)*uw+uj
                         index += 1
                         continue
                     }
                     
                     // emit extra index to create degenerate triangle
                     if (j == (width-1)) {
-                        faces[index].x = ui*uw+uj
-                        faces[index].y = (ui+1)*uw+uj
-                        faces[index].z = (ui+1)*uw+uj-1
+                        indices[index].x = ui*uw+uj
+                        indices[index].y = (ui+1)*uw+uj
+                        indices[index].z = (ui+1)*uw+uj-1
                         index += 1
                         continue
                     }
                     
-                    faces[index].x = ui*uw+uj
-                    faces[index].y = (ui+1)*uw+uj
-                    faces[index].z = (ui+1)*uw+uj-1
+                    indices[index].x = ui*uw+uj
+                    indices[index].y = (ui+1)*uw+uj
+                    indices[index].z = (ui+1)*uw+uj-1
                     index += 1
                     
-                    faces[index].x = ui*uw+uj
-                    faces[index].y = ui*uw+uj+1
-                    faces[index].z = (ui+1)*uw+uj
+                    indices[index].x = ui*uw+uj
+                    indices[index].y = ui*uw+uj+1
+                    indices[index].z = (ui+1)*uw+uj
                     index += 1
                 }
             }
         }
         print("did init vertices")
-        super.init(vertices: vertices, uvs: uvs, faces: faces)
+        super.init(vertices: vertices, uvs: uvs, indices: indices)
     }
     
 }

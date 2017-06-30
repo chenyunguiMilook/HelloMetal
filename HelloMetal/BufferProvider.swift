@@ -25,7 +25,7 @@ public class BufferProvider<T>: NSObject {
         self.uniformsBuffers = [MTLBuffer]()
         
         for _ in 0 ..< inflightBuffersCount {
-            let uniformsBuffer = device.makeBuffer(length: MemoryLayout<T>.size, options: [])
+            let uniformsBuffer = device.makeBuffer(length: bufferLength, options: [])
             uniformsBuffers.append(uniformsBuffer!)
         }
     }
