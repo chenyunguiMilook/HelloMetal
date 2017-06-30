@@ -13,8 +13,6 @@ import simd
 
 public class Node {
     
-    var time: CFTimeInterval = 0.0
-    
     let name: String
     var vertexCount: Int
     var indicesCount: Int
@@ -80,9 +78,6 @@ public class Node {
         }
         
         guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
-        // For now cull mode is used instead of depth buffer
-        renderEncoder.setCullMode(MTLCullMode.front)
-        
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
         renderEncoder.setVertexBuffer(self.uvsBuffer, offset: 0, index: 1)
@@ -91,17 +86,12 @@ public class Node {
             renderEncoder.setFragmentSamplerState(samplerState, index: 0)
         }
         
-        //renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertexCount)
         renderEncoder.drawIndexedPrimitives(type: .triangle, indexCount: indicesCount, indexType: .uint32, indexBuffer: indexBuffer, indexBufferOffset: 0)
         renderEncoder.endEncoding()
         
         // the present target could be a MTLTexture
         commandBuffer.present(drawable)
         commandBuffer.commit()
-    }
-    
-    func updateWithDelta(_ delta: CFTimeInterval) {
-        self.time += delta
     }
 }
 
