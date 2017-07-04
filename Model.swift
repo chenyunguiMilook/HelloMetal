@@ -32,7 +32,7 @@ public class Model {
         
         self.name = name
         self.device = device
-        self.geometry = GeometryBuffer(geometry: geometry, device: device)
+        self.geometry = GeometryBuffer(geometry: geometry, device: device, inflightBuffersCount: availableSources)
         self.texture = texture
         self.avaliableResourcesSemaphore = DispatchSemaphore(value: availableSources)
     }
@@ -58,9 +58,10 @@ public class Model {
         guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
+        let (vertexBuffer, uvBuffer) = geometry.nextGeometryBuffer()
         renderEncoder.setRenderPipelineState(pipelineState)
-        renderEncoder.setVertexBuffer(self.geometry.vertexBuffer, offset: 0, index: 0)
-        renderEncoder.setVertexBuffer(self.geometry.uvBuffer, offset: 0, index: 1)
+        renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        renderEncoder.setVertexBuffer(uvBuffer, offset: 0, index: 1)
         renderEncoder.setFragmentTexture(self.texture, index: 0)
         if let samplerState = samplerState {
             renderEncoder.setFragmentSamplerState(samplerState, index: 0)
