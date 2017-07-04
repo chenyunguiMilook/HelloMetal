@@ -38,8 +38,8 @@ public class Model {
     }
     
     public func render(_ commandQueue: MTLCommandQueue,
-                       pipelineState: MTLRenderPipelineState,
-                       drawable: CAMetalDrawable,
+                       pipelineState: MTLRenderPipelineState, // means shader
+                       drawable: CAMetalDrawable, // means canvas for draw
                        clearColor: MTLClearColor?) {
         
         _ = self.avaliableResourcesSemaphore.wait(timeout: DispatchTime.distantFuture)
@@ -47,11 +47,11 @@ public class Model {
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
-        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.0, green: 104.0 / 255.0, blue: 5.0 / 255.0, alpha: 1.0)
+        renderPassDescriptor.colorAttachments[0].clearColor = clearColor ?? MTLClearColorMake(0, 0, 0, 0)
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         
         guard let commandBuffer = commandQueue.makeCommandBuffer() else { return }
-        commandBuffer.addCompletedHandler { (_) -> Void in
+        commandBuffer.addCompletedHandler { _ in
             self.avaliableResourcesSemaphore.signal()
         }
         
