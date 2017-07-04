@@ -17,6 +17,7 @@
 		35023C5C19DDB970006F3266 /* HelloMetalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35023C5B19DDB970006F3266 /* HelloMetalTests.swift */; };
 		35023C6619DDBB29006F3266 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35023C6519DDBB29006F3266 /* Shaders.metal */; };
 		BB368F3E1F04DA1900391492 /* CGImage+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB368F3D1F04DA1900391492 /* CGImage+Behavior.swift */; };
+		BB4594BB1F0B83E30006FFD0 /* GeometryBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4594BA1F0B83E30006FFD0 /* GeometryBuffer.swift */; };
 		BB80E3411F04F91600CE018A /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3401F04F91600CE018A /* Geometry.swift */; };
 		BB80E3431F04F93700CE018A /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3421F04F93700CE018A /* Texture.swift */; };
 		BB80E3491F0514B500CE018A /* GeometryPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3481F0514B500CE018A /* GeometryPlane.swift */; };
@@ -52,6 +53,7 @@
 		35023C6519DDBB29006F3266 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = Shaders.metal; path = HelloMetal/Shaders.metal; sourceTree = "<group>"; };
 		43167D7719F9371D00929F8C /* HelloMetal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "HelloMetal-Bridging-Header.h"; path = "HelloMetal/HelloMetal-Bridging-Header.h"; sourceTree = "<group>"; };
 		BB368F3D1F04DA1900391492 /* CGImage+Behavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImage+Behavior.swift"; sourceTree = "<group>"; };
+		BB4594BA1F0B83E30006FFD0 /* GeometryBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryBuffer.swift; sourceTree = "<group>"; };
 		BB80E3401F04F91600CE018A /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		BB80E3421F04F93700CE018A /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
 		BB80E3481F0514B500CE018A /* GeometryPlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryPlane.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 			children = (
 				BB80E3401F04F91600CE018A /* Geometry.swift */,
 				BB80E3481F0514B500CE018A /* GeometryPlane.swift */,
+				BB4594BA1F0B83E30006FFD0 /* GeometryBuffer.swift */,
 				BB80E34A1F05168000CE018A /* Model.swift */,
 				BB80E34C1F05270700CE018A /* ModelPlane.swift */,
 				BB80E3421F04F93700CE018A /* Texture.swift */,
@@ -264,6 +267,7 @@
 			files = (
 				35023C6619DDBB29006F3266 /* Shaders.metal in Sources */,
 				BB80E3431F04F93700CE018A /* Texture.swift in Sources */,
+				BB4594BB1F0B83E30006FFD0 /* GeometryBuffer.swift in Sources */,
 				BB80E3411F04F91600CE018A /* Geometry.swift in Sources */,
 				BB80E34D1F05270700CE018A /* ModelPlane.swift in Sources */,
 				0C9DA0AD1AD7CD6200126EC2 /* BufferProvider.swift in Sources */,

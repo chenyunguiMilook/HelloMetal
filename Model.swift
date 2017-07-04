@@ -15,7 +15,7 @@ public class Model {
     
     let name: String
     var device: MTLDevice
-    var geometry: GeometryContainer
+    var geometry: GeometryBuffer
     var texture: MTLTexture
     
     lazy var samplerState: MTLSamplerState? = self.device.defaultSampler
@@ -32,7 +32,7 @@ public class Model {
         
         self.name = name
         self.device = device
-        self.geometry = GeometryContainer(geometry: geometry, device: device)
+        self.geometry = GeometryBuffer(geometry: geometry, device: device)
         self.texture = texture
         self.avaliableResourcesSemaphore = DispatchSemaphore(value: availableSources)
     }
@@ -67,7 +67,7 @@ public class Model {
         }
         
         renderEncoder.drawIndexedPrimitives(type: .triangle,
-                                            indexCount: geometry.indexCount * 3,
+                                            indexCount: geometry.indexCount,
                                             indexType: .uint32,
                                             indexBuffer: geometry.indexBuffer,
                                             indexBufferOffset: 0)
