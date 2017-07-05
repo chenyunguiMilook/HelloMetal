@@ -22,9 +22,7 @@ public class Renderer : NSObject {
         super.init()
         self.device = device
         self.commandQueue = device.makeCommandQueue()
-        
-        let texture = loadTexture(imageNamed: "cube.png", device: device)
-        self.model = ModelPlane(device: device, texture: texture)
+        self.model = ModelPlane(device: device, texture: "cube.png")
         self.shader = Shader(device: device)
     }
     

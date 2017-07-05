@@ -27,7 +27,8 @@ public class Model {
         }
     }
     
-    public init(name: String, device: MTLDevice, geometry: Geometry, texture: MTLTexture?, textureSampler: MTLSamplerState?) {
+    
+    public init(name: String, device: MTLDevice, geometry: Geometry, texture: MTLTexture?, textureSampler: MTLSamplerState? = nil) {
         
         self.name = name
         self.geometry = GeometryBuffer(geometry: geometry, device: device, inflightBuffersCount: availableSources)
@@ -74,8 +75,18 @@ public class Model {
     }
 }
 
-
-
+public extension Model {
+    
+    public convenience init(name: String, device: MTLDevice, geometry: Geometry, texture: String, textureSampler: MTLSamplerState? = nil) {
+        let texture = loadTexture(imageNamed: texture, device: device)
+        self.init(name: name, device: device, geometry: geometry, texture: texture, textureSampler: textureSampler)
+    }
+    
+    public convenience init(name: String, device: MTLDevice, geometry: Geometry, texture: UIImage, textureSampler: MTLSamplerState? = nil) {
+        let texture = loadTexture(image: texture, device: device)
+        self.init(name: name, device: device, geometry: geometry, texture: texture, textureSampler: textureSampler)
+    }
+}
 
 
 

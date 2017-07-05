@@ -8,6 +8,7 @@
 
 import Foundation
 import Metal
+import UIKit
 
 public class ModelPlane : Model {
     
@@ -22,3 +23,38 @@ public class ModelPlane : Model {
         super.init(name: name, device: device, geometry: geometry, texture: texture, textureSampler: textureSampler)
     }
 }
+
+extension ModelPlane {
+    
+    public convenience init(name: String = "Plane",
+                device: MTLDevice,
+                texture: UIImage,
+                textureSampler: MTLSamplerState? = nil,
+                widthSegments: Int = 1,
+                heightSegments: Int = 1) {
+        
+        let texture = loadTexture(image: texture, device: device)
+        self.init(name: name, device: device, texture: texture, textureSampler: textureSampler, widthSegments: widthSegments, heightSegments: heightSegments)
+    }
+    
+    public convenience init(name: String = "Plane",
+                            device: MTLDevice,
+                            texture: String,
+                            textureSampler: MTLSamplerState? = nil,
+                            widthSegments: Int = 1,
+                            heightSegments: Int = 1) {
+        
+        let texture = loadTexture(imageNamed: texture, device: device)
+        self.init(name: name, device: device, texture: texture, textureSampler: textureSampler, widthSegments: widthSegments, heightSegments: heightSegments)
+    }
+}
+
+
+
+
+
+
+
+
+
+
