@@ -50,7 +50,49 @@ extension Geometry {
     }
 }
 
-
+extension Geometry {
+    
+    public var edgeSize: Int {
+        return MemoryLayout<Float>.size * indices.count * 3 * 4
+    }
+    
+    public var edgeBuffer: [Float] {
+        
+        // each face have three edge, each edge need four value(start.x, start.y, end.x, end.y)
+        let edgeValueCount = indices.count * 3 * 4
+        var edges = [Float](repeating: 0, count: edgeValueCount)
+        
+        var index:Int = 0
+        for i in 0 ..< indices.count {
+            
+            let v0 = Int(indices[i].x)
+            let v1 = Int(indices[i].y)
+            let v2 = Int(indices[i].z)
+            
+            // v0 to v1
+            edges[index]   = vertices[v0].x
+            edges[index+1] = vertices[v0].y
+            edges[index+2] = vertices[v1].x
+            edges[index+3] = vertices[v1].y
+            
+            // v0 to v2
+            edges[index+4] = vertices[v0].x
+            edges[index+5] = vertices[v0].y
+            edges[index+6] = vertices[v2].x
+            edges[index+7] = vertices[v2].y
+            
+            // v1 to v2
+            edges[index+8]  = vertices[v1].x
+            edges[index+9]  = vertices[v1].y
+            edges[index+10] = vertices[v2].x
+            edges[index+11] = vertices[v2].y
+            
+            index = index + 12
+        }
+        
+        return edges
+    }
+}
 
 
 

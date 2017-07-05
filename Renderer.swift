@@ -16,14 +16,12 @@ public class Renderer : NSObject {
     var pipelineState: MTLRenderPipelineState!
     var commandQueue: MTLCommandQueue!
     var model: ModelPlane!
-    var shader: Shader!
     
     public init(device: MTLDevice) {
         super.init()
         self.device = device
         self.commandQueue = device.makeCommandQueue()
-        self.model = ModelPlane(device: device, texture: "cube.png")
-        self.shader = Shader(device: device)
+        self.model = ModelPlane(library: device.makeDefaultLibrary()!, texture: "cube.png")
     }
     
     public func render(in drawable: CAMetalDrawable) {
@@ -36,7 +34,6 @@ public class Renderer : NSObject {
         
         self.model.render(commandQueue: commandQueue,
                           passDescriptor: renderPassDescriptor,
-                          pipelineState: shader.renderPiplineState,
                           drawable: drawable)
     }
 }
