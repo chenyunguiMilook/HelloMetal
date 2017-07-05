@@ -37,10 +37,9 @@ public class Renderer : NSObject {
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         
         self.model.render(commandQueue: commandQueue,
-                          pipelineState: shader.renderPiplineState,
                           passDescriptor: renderPassDescriptor,
-                          drawable: drawable,
-                          clearColor: nil)
+                          pipelineState: shader.renderPiplineState,
+                          drawable: drawable)
     }
 }
 

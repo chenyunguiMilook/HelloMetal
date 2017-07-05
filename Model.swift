@@ -28,10 +28,6 @@ public class Model {
         }
     }
     
-//    public init(name: String, device: MTLDevice, geometry: Geometry, texture: UIImage) {
-//
-//    }
-    
     public init(name: String, device: MTLDevice, geometry: Geometry, texture: MTLTexture?) {
         
         self.name = name
@@ -42,10 +38,9 @@ public class Model {
     }
     
     public func render(commandQueue: MTLCommandQueue,
-                       pipelineState: MTLRenderPipelineState, // means shader
                        passDescriptor: MTLRenderPassDescriptor,
-                       drawable: CAMetalDrawable, // means canvas for draw
-                       clearColor: MTLClearColor?) {
+                       pipelineState: MTLRenderPipelineState, // means shader
+                       drawable: CAMetalDrawable) { // means canvas for draw
         
         _ = self.avaliableResourcesSemaphore.wait(timeout: DispatchTime.distantFuture)
         
