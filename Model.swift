@@ -14,13 +14,12 @@ import simd
 public class Model {
     
     let name: String
-    var device: MTLDevice
     var geometry: GeometryBuffer
     var texture: MTLTexture?
+    var textureSampler: MTLSamplerState?
     
-    lazy var samplerState: MTLSamplerState? = self.device.defaultSampler
     let availableSources: Int = 3
-    internal var avaliableResourcesSemaphore: DispatchSemaphore
+    var avaliableResourcesSemaphore: DispatchSemaphore
     
     deinit {
         for _ in 0 ..< availableSources {
@@ -28,12 +27,12 @@ public class Model {
         }
     }
     
-    public init(name: String, device: MTLDevice, geometry: Geometry, texture: MTLTexture?) {
+    public init(name: String, device: MTLDevice, geometry: Geometry, texture: MTLTexture?, textureSampler: MTLSamplerState?) {
         
         self.name = name
-        self.device = device
         self.geometry = GeometryBuffer(geometry: geometry, device: device, inflightBuffersCount: availableSources)
         self.texture = texture
+        self.textureSampler = textureSampler ?? device.defaultSampler
         self.avaliableResourcesSemaphore = DispatchSemaphore(value: availableSources)
     }
     
@@ -57,9 +56,9 @@ public class Model {
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         renderEncoder.setVertexBuffer(uvBuffer, offset: 0, index: 1)
         
-        if let texture = texture, let samplerState = samplerState {
+        if let texture = texture, let textureSampler = textureSampler {
             renderEncoder.setFragmentTexture(texture, index: 0)
-            renderEncoder.setFragmentSamplerState(samplerState, index: 0)
+            renderEncoder.setFragmentSamplerState(textureSampler, index: 0)
         }
         
         renderEncoder.drawIndexedPrimitives(type: .triangle,
