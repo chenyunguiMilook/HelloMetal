@@ -21,7 +21,7 @@ public class Renderer : NSObject {
         super.init()
         self.device = device
         self.commandQueue = device.makeCommandQueue()
-        self.model = ModelPlane(library: device.makeDefaultLibrary()!, texture: "cube.png")
+        self.model = ModelPlane(library: device.makeDefaultLibrary()!, pixelFormat: .bgra8Unorm, texture: "cube.png")
     }
     
     public func render(in drawable: CAMetalDrawable) {

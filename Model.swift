@@ -28,11 +28,11 @@ public class Model {
         }
     }
     
-    public init(name: String, library: MTLLibrary, geometry: Geometry, texture: MTLTexture?, textureSampler: MTLSamplerState? = nil) {
+    public init(name: String, library: MTLLibrary, pixelFormat: MTLPixelFormat, geometry: Geometry, texture: MTLTexture?, textureSampler: MTLSamplerState? = nil) {
         
         self.name = name
         self.geometry = GeometryBuffer(geometry: geometry, device: library.device, inflightBuffersCount: availableSources)
-        self.shader = Shader(library: library)
+        self.shader = Shader(library: library, pixelFormat: pixelFormat)
         self.texture = texture
         self.textureSampler = textureSampler ?? library.device.defaultSampler
         self.avaliableResourcesSemaphore = DispatchSemaphore(value: availableSources)
@@ -77,14 +77,14 @@ public class Model {
 
 public extension Model {
     
-    public convenience init(name: String, library: MTLLibrary, geometry: Geometry, texture: String, textureSampler: MTLSamplerState? = nil) {
+    public convenience init(name: String, library: MTLLibrary, pixelFormat: MTLPixelFormat, geometry: Geometry, texture: String, textureSampler: MTLSamplerState? = nil) {
         let texture = loadTexture(imageNamed: texture, device: library.device)
-        self.init(name: name, library: library, geometry: geometry, texture: texture, textureSampler: textureSampler)
+        self.init(name: name, library: library, pixelFormat: pixelFormat, geometry: geometry, texture: texture, textureSampler: textureSampler)
     }
     
-    public convenience init(name: String, library: MTLLibrary, geometry: Geometry, texture: UIImage, textureSampler: MTLSamplerState? = nil) {
+    public convenience init(name: String, library: MTLLibrary, pixelFormat: MTLPixelFormat, geometry: Geometry, texture: UIImage, textureSampler: MTLSamplerState? = nil) {
         let texture = loadTexture(image: texture, device: library.device)
-        self.init(name: name, library: library, geometry: geometry, texture: texture, textureSampler: textureSampler)
+        self.init(name: name, library: library, pixelFormat: pixelFormat, geometry: geometry, texture: texture, textureSampler: textureSampler)
     }
 }
 

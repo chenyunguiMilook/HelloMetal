@@ -13,7 +13,10 @@ public class Shader {
     
     public var renderPiplineState: MTLRenderPipelineState!
     
-    public init(library: MTLLibrary, vertexFuncName: String = "basic_vertex", fragmentFuncName: String = "basic_fragment") {
+    public init(library: MTLLibrary,
+                pixelFormat: MTLPixelFormat = .bgra8Unorm,
+                vertexFuncName: String = "basic_vertex",
+                fragmentFuncName: String = "basic_fragment") {
         
         let vertexProgram = library.makeFunction(name: vertexFuncName)
         let fragmentProgram = library.makeFunction(name: fragmentFuncName)
@@ -21,7 +24,7 @@ public class Shader {
         let descriptor = MTLRenderPipelineDescriptor()
             descriptor.vertexFunction = vertexProgram
             descriptor.fragmentFunction = fragmentProgram
-            descriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+            descriptor.colorAttachments[0].pixelFormat = pixelFormat
         
         do {
             renderPiplineState = try library.device.makeRenderPipelineState(descriptor: descriptor)

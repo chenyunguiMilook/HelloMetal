@@ -14,13 +14,14 @@ public class ModelPlane : Model {
     
     public init(name: String = "Plane",
                 library: MTLLibrary,
+                pixelFormat: MTLPixelFormat,
                 texture: MTLTexture?,
                 textureSampler: MTLSamplerState? = nil,
                 widthSegments: Int = 1,
                 heightSegments: Int = 1) {
         
         let geometry = GeometryPlane(widthSegments: widthSegments, heightSegments: heightSegments)
-        super.init(name: name, library: library, geometry: geometry, texture: texture, textureSampler: textureSampler)
+        super.init(name: name, library: library, pixelFormat: pixelFormat, geometry: geometry, texture: texture, textureSampler: textureSampler)
     }
 }
 
@@ -28,24 +29,40 @@ extension ModelPlane {
     
     public convenience init(name: String = "Plane",
                 library: MTLLibrary,
+                pixelFormat: MTLPixelFormat,
                 texture: UIImage,
                 textureSampler: MTLSamplerState? = nil,
                 widthSegments: Int = 1,
                 heightSegments: Int = 1) {
         
         let texture = loadTexture(image: texture, device: library.device)
-        self.init(name: name, library: library, texture: texture, textureSampler: textureSampler, widthSegments: widthSegments, heightSegments: heightSegments)
+        
+        self.init(name: name,
+                  library: library,
+                  pixelFormat: pixelFormat,
+                  texture: texture,
+                  textureSampler: textureSampler,
+                  widthSegments: widthSegments,
+                  heightSegments: heightSegments)
     }
     
     public convenience init(name: String = "Plane",
                             library: MTLLibrary,
+                            pixelFormat: MTLPixelFormat,
                             texture: String,
                             textureSampler: MTLSamplerState? = nil,
                             widthSegments: Int = 1,
                             heightSegments: Int = 1) {
         
         let texture = loadTexture(imageNamed: texture, device: library.device)
-        self.init(name: name, library: library, texture: texture, textureSampler: textureSampler, widthSegments: widthSegments, heightSegments: heightSegments)
+        
+        self.init(name: name,
+                  library: library,
+                  pixelFormat: pixelFormat,
+                  texture: texture,
+                  textureSampler: textureSampler,
+                  widthSegments: widthSegments,
+                  heightSegments: heightSegments)
     }
 }
 
