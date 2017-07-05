@@ -16,41 +16,29 @@ public class Renderer : NSObject {
     var pipelineState: MTLRenderPipelineState!
     var commandQueue: MTLCommandQueue!
     var model: ModelPlane!
+    var shader: Shader!
     
     public init(device: MTLDevice) {
         super.init()
         self.device = device
         self.commandQueue = device.makeCommandQueue()
         
-        let texture = Texture(resourceName: "cube", ext: "png")
-            texture.loadTexture(device: device, flip: true)
-        self.model = ModelPlane(device: device, texture: texture.texture)
-        
-        self.compileShader()
-    }
-    
-    internal func compileShader() {
-        
-        let defaultLibrary = device.makeDefaultLibrary()
-        let fragmentProgram = defaultLibrary!.makeFunction(name: "basic_fragment")
-        let vertexProgram = defaultLibrary!.makeFunction(name: "basic_vertex")
-        
-        let piplineDescriptor = MTLRenderPipelineDescriptor()
-        piplineDescriptor.vertexFunction = vertexProgram
-        piplineDescriptor.fragmentFunction = fragmentProgram
-        piplineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-        
-        do {
-            pipelineState = try device.makeRenderPipelineState(descriptor: piplineDescriptor)
-        } catch let error as NSError {
-            print("Failed to create pipeline state, error \(error.localizedDescription)")
-        }
+        let texture = loadTexture(imageNamed: "cube.png", device: device)
+        self.model = ModelPlane(device: device, texture: texture)
+        self.shader = Shader(device: device)
     }
     
     public func render(in drawable: CAMetalDrawable) {
         
-        self.model.render(commandQueue,
-                          pipelineState: pipelineState,
+        let renderPassDescriptor = MTLRenderPassDescriptor()
+        renderPassDescriptor.colorAttachments[0].texture = drawable.texture
+        renderPassDescriptor.colorAttachments[0].loadAction = .clear
+        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 0)
+        renderPassDescriptor.colorAttachments[0].storeAction = .store
+        
+        self.model.render(commandQueue: commandQueue,
+                          pipelineState: shader.renderPiplineState,
+                          passDescriptor: renderPassDescriptor,
                           drawable: drawable,
                           clearColor: nil)
     }

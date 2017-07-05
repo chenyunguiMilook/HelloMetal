@@ -16,7 +16,7 @@ public class Model {
     let name: String
     var device: MTLDevice
     var geometry: GeometryBuffer
-    var texture: MTLTexture
+    var texture: MTLTexture?
     
     lazy var samplerState: MTLSamplerState? = self.device.defaultSampler
     let availableSources: Int = 3
@@ -28,7 +28,11 @@ public class Model {
         }
     }
     
-    public init(name: String, device: MTLDevice, geometry: Geometry, texture: MTLTexture) {
+//    public init(name: String, device: MTLDevice, geometry: Geometry, texture: UIImage) {
+//
+//    }
+    
+    public init(name: String, device: MTLDevice, geometry: Geometry, texture: MTLTexture?) {
         
         self.name = name
         self.device = device
@@ -37,33 +41,29 @@ public class Model {
         self.avaliableResourcesSemaphore = DispatchSemaphore(value: availableSources)
     }
     
-    public func render(_ commandQueue: MTLCommandQueue,
+    public func render(commandQueue: MTLCommandQueue,
                        pipelineState: MTLRenderPipelineState, // means shader
+                       passDescriptor: MTLRenderPassDescriptor,
                        drawable: CAMetalDrawable, // means canvas for draw
                        clearColor: MTLClearColor?) {
         
         _ = self.avaliableResourcesSemaphore.wait(timeout: DispatchTime.distantFuture)
-        
-        let renderPassDescriptor = MTLRenderPassDescriptor()
-        renderPassDescriptor.colorAttachments[0].texture = drawable.texture
-        renderPassDescriptor.colorAttachments[0].loadAction = .clear
-        renderPassDescriptor.colorAttachments[0].clearColor = clearColor ?? MTLClearColorMake(0, 0, 0, 0)
-        renderPassDescriptor.colorAttachments[0].storeAction = .store
         
         guard let commandBuffer = commandQueue.makeCommandBuffer() else { return }
         commandBuffer.addCompletedHandler { _ in
             self.avaliableResourcesSemaphore.signal()
         }
         
-        guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+        guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: passDescriptor) else {
             return
         }
         let (vertexBuffer, uvBuffer) = geometry.nextGeometryBuffer()
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         renderEncoder.setVertexBuffer(uvBuffer, offset: 0, index: 1)
-        renderEncoder.setFragmentTexture(self.texture, index: 0)
-        if let samplerState = samplerState {
+        
+        if let texture = texture, let samplerState = samplerState {
+            renderEncoder.setFragmentTexture(texture, index: 0)
             renderEncoder.setFragmentSamplerState(samplerState, index: 0)
         }
         
