@@ -17,7 +17,7 @@ public class Renderer : NSObject {
     var device: MTLDevice!
     var pipelineState: MTLRenderPipelineState!
     var commandQueue: MTLCommandQueue!
-    var model: ModelPlane!
+    var model: Plane!
     
     var avaliableResourcesSemaphore: DispatchSemaphore!
     
@@ -31,7 +31,7 @@ public class Renderer : NSObject {
         super.init()
         self.device = device
         self.commandQueue = device.makeCommandQueue()
-        self.model = ModelPlane(library: device.makeDefaultLibrary()!, pixelFormat: .bgra8Unorm, texture: "cube.png")
+        self.model = Plane(library: device.makeDefaultLibrary()!, pixelFormat: .bgra8Unorm, texture: "cube.png")
         self.avaliableResourcesSemaphore = DispatchSemaphore(value: availableSources)
     }
     

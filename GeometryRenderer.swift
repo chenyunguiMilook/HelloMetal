@@ -11,10 +11,11 @@ import Metal
 import MetalKit
 import simd
 
-public class Model {
+public class GeometryRenderer {
     
     let name: String
-    var geometry: GeometryBuffer
+    var geometry: Geometry
+    var geometryBuffer: GeometryBuffer
     var texture: MTLTexture?
     var textureSampler: MTLSamplerState?
     var shader: Shader!
@@ -26,7 +27,8 @@ public class Model {
                 texture: MTLTexture?,
                 textureSampler: MTLSamplerState? = nil) {
         self.name = name
-        self.geometry = GeometryBuffer(geometry: geometry, device: library.device, inflightBuffersCount: availableSources)
+        self.geometry = geometry
+        self.geometryBuffer = GeometryBuffer(geometry: geometry, device: library.device, inflightBuffersCount: availableSources)
         self.shader = Shader(library: library, pixelFormat: pixelFormat)
         self.texture = texture
         self.textureSampler = textureSampler ?? library.device.defaultSampler
@@ -34,7 +36,7 @@ public class Model {
     
     public func render(commandEncoder: MTLRenderCommandEncoder) { // means canvas for draw
         
-        let (vertexBuffer, uvBuffer) = geometry.nextGeometryBuffer()
+        let (vertexBuffer, uvBuffer) = geometryBuffer.nextGeometryBuffer()
         commandEncoder.setRenderPipelineState(shader.renderPiplineState)
         commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         commandEncoder.setVertexBuffer(uvBuffer, offset: 0, index: 1)
@@ -45,14 +47,14 @@ public class Model {
         }
         
         commandEncoder.drawIndexedPrimitives(type: .triangle,
-                                            indexCount: geometry.indexCount,
+                                            indexCount: geometryBuffer.indexCount,
                                             indexType: .uint32,
-                                            indexBuffer: geometry.indexBuffer,
+                                            indexBuffer: geometryBuffer.indexBuffer,
                                             indexBufferOffset: 0)
     }
 }
 
-public extension Model {
+public extension GeometryRenderer {
     
     public convenience init(name: String,
                             library: MTLLibrary,

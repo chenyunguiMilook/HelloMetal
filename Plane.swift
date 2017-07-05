@@ -10,7 +10,7 @@ import Foundation
 import Metal
 import UIKit
 
-public class ModelPlane : Model {
+public class Plane : GeometryRenderer {
     
     public init(name: String = "Plane",
                 library: MTLLibrary,
@@ -25,7 +25,7 @@ public class ModelPlane : Model {
     }
 }
 
-extension ModelPlane {
+extension Plane {
     
     public convenience init(name: String = "Plane",
                 library: MTLLibrary,
