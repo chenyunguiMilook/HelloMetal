@@ -25,6 +25,11 @@ class MySceneViewController: UIViewController {
         metalLayer.pixelFormat = .bgra8Unorm
         metalLayer.framebufferOnly = false
         view.layer.addSublayer(metalLayer)
+        
+        let tap = UITapGestureRecognizer()
+            tap.numberOfTapsRequired = 1
+            tap.addTarget(self, action: #selector(onTap(gesture:)))
+        self.view.addGestureRecognizer(tap)
     }
     
     override func viewDidLayoutSubviews() {
@@ -41,6 +46,13 @@ class MySceneViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.render()
+    }
+    
+    @objc func onTap(gesture: UIGestureRecognizer) {
+        
+        let geometry = self.renderer.model.geometry
+        
         self.render()
     }
     

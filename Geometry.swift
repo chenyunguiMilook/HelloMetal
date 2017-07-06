@@ -9,15 +9,32 @@
 import Foundation
 import Metal
 import simd
+import UIKit
 
 public class Geometry {
     
-    public var vertices: [float3]
-    public var uvs: [float2]
-    public var indices: [uint3]
+    private var _vertices: [float3]
+    private var _uvs: [float2]
+    
+    public private(set) var vertices: [float3]
+    public private(set) var uvs: [float2]
+    public private(set) var indices: [uint3]
+    
+    public var vertexTransform: CGAffineTransform = .identity {
+        didSet {
+            self.vertices = _vertices * vertexTransform
+        }
+    }
+    public var uvTransform: CGAffineTransform = .identity {
+        didSet {
+            self.uvs = _uvs * uvTransform
+        }
+    }
     
     public init(vertices: [float3], uvs: [float2], indices: [uint3]) {
+        self._vertices = vertices
         self.vertices = vertices
+        self._uvs = uvs
         self.uvs = uvs
         self.indices = indices
     }
