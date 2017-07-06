@@ -29,7 +29,7 @@
 		BB85AE2E1F0E2BBE00109861 /* GlobalFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85AE2D1F0E2BBE00109861 /* GlobalFunction.swift */; };
 		BB85AE301F0E2BF500109861 /* RotationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85AE2F1F0E2BF500109861 /* RotationType.swift */; };
 		BB85AE321F0E2C1200109861 /* MirrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85AE311F0E2C1200109861 /* MirrorType.swift */; };
-		BB85AE341F0E2C9200109861 /* CGAffineTransform+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85AE331F0E2C9200109861 /* CGAffineTransform+Behavior.swift */; };
+		BB85AE361F0E302700109861 /* CGAffineTransform+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85AE351F0E302600109861 /* CGAffineTransform+Behavior.swift */; };
 		BBDF9AE81F04DCD4001075DF /* MTLDevice+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDF9AE71F04DCD4001075DF /* MTLDevice+Behavior.swift */; };
 		BBDF9AEA1F04EEFA001075DF /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDF9AE91F04EEFA001075DF /* Renderer.swift */; };
 /* End PBXBuildFile section */
@@ -72,7 +72,7 @@
 		BB85AE2D1F0E2BBE00109861 /* GlobalFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunction.swift; sourceTree = "<group>"; };
 		BB85AE2F1F0E2BF500109861 /* RotationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationType.swift; sourceTree = "<group>"; };
 		BB85AE311F0E2C1200109861 /* MirrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorType.swift; sourceTree = "<group>"; };
-		BB85AE331F0E2C9200109861 /* CGAffineTransform+Behavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGAffineTransform+Behavior.swift"; path = "../../../../IphoneDevelop/huangpu_ios/OpenGLKit/Source/CGAffineTransform+Behavior.swift"; sourceTree = "<group>"; };
+		BB85AE351F0E302600109861 /* CGAffineTransform+Behavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGAffineTransform+Behavior.swift"; path = "../../../../IphoneDevelop/huangpu_ios/OpenGLKit/Source/CGAffineTransform+Behavior.swift"; sourceTree = "<group>"; };
 		BBDF9AE71F04DCD4001075DF /* MTLDevice+Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MTLDevice+Behavior.swift"; sourceTree = "<group>"; };
 		BBDF9AE91F04EEFA001075DF /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -173,8 +173,8 @@
 				BB80E3421F04F93700CE018A /* MTLTexture+Utils.swift */,
 				BB368F3D1F04DA1900391492 /* CGImage+Behavior.swift */,
 				BBDF9AE71F04DCD4001075DF /* MTLDevice+Behavior.swift */,
-				BB85AE331F0E2C9200109861 /* CGAffineTransform+Behavior.swift */,
 				BB85AE2B1F0E240000109861 /* simd+Utils.swift */,
+				BB85AE351F0E302600109861 /* CGAffineTransform+Behavior.swift */,
 				43167D7719F9371D00929F8C /* HelloMetal-Bridging-Header.h */,
 			);
 			name = Shared;
@@ -300,7 +300,7 @@
 				BBDF9AEA1F04EEFA001075DF /* Renderer.swift in Sources */,
 				BB36527E1F0CC6A3006A740D /* GeometryWireframeBuffer.swift in Sources */,
 				BB80E34B1F05168000CE018A /* GeometryRenderer.swift in Sources */,
-				BB85AE341F0E2C9200109861 /* CGAffineTransform+Behavior.swift in Sources */,
+				BB85AE361F0E302700109861 /* CGAffineTransform+Behavior.swift in Sources */,
 				BB85AE321F0E2C1200109861 /* MirrorType.swift in Sources */,
 				BB80E3491F0514B500CE018A /* GeometryPlane.swift in Sources */,
 				0C49914D1A7278730028ECBB /* MySceneViewController.swift in Sources */,
