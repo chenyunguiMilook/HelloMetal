@@ -16,6 +16,8 @@
 		35023C5C19DDB970006F3266 /* HelloMetalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35023C5B19DDB970006F3266 /* HelloMetalTests.swift */; };
 		35023C6619DDBB29006F3266 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35023C6519DDBB29006F3266 /* Shaders.metal */; };
 		BB32E1F61F0C88B90071D328 /* Shader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB32E1F51F0C88B90071D328 /* Shader.swift */; };
+		BB36527C1F0CC601006A740D /* GeometryWireframeRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB36527B1F0CC601006A740D /* GeometryWireframeRenderer.swift */; };
+		BB36527E1F0CC6A3006A740D /* GeometryWireframeBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB36527D1F0CC6A3006A740D /* GeometryWireframeBuffer.swift */; };
 		BB368F3E1F04DA1900391492 /* CGImage+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB368F3D1F04DA1900391492 /* CGImage+Behavior.swift */; };
 		BB4594BB1F0B83E30006FFD0 /* GeometryBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4594BA1F0B83E30006FFD0 /* GeometryBuffer.swift */; };
 		BB80E3411F04F91600CE018A /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3401F04F91600CE018A /* Geometry.swift */; };
@@ -52,6 +54,8 @@
 		35023C6519DDBB29006F3266 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = Shaders.metal; path = HelloMetal/Shaders.metal; sourceTree = "<group>"; };
 		43167D7719F9371D00929F8C /* HelloMetal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "HelloMetal-Bridging-Header.h"; path = "HelloMetal/HelloMetal-Bridging-Header.h"; sourceTree = "<group>"; };
 		BB32E1F51F0C88B90071D328 /* Shader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shader.swift; sourceTree = "<group>"; };
+		BB36527B1F0CC601006A740D /* GeometryWireframeRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryWireframeRenderer.swift; sourceTree = "<group>"; };
+		BB36527D1F0CC6A3006A740D /* GeometryWireframeBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryWireframeBuffer.swift; sourceTree = "<group>"; };
 		BB368F3D1F04DA1900391492 /* CGImage+Behavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImage+Behavior.swift"; sourceTree = "<group>"; };
 		BB4594BA1F0B83E30006FFD0 /* GeometryBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryBuffer.swift; sourceTree = "<group>"; };
 		BB80E3401F04F91600CE018A /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
@@ -146,6 +150,8 @@
 				BB80E3481F0514B500CE018A /* GeometryPlane.swift */,
 				BB4594BA1F0B83E30006FFD0 /* GeometryBuffer.swift */,
 				BB80E34A1F05168000CE018A /* GeometryRenderer.swift */,
+				BB36527D1F0CC6A3006A740D /* GeometryWireframeBuffer.swift */,
+				BB36527B1F0CC601006A740D /* GeometryWireframeRenderer.swift */,
 				BB80E34C1F05270700CE018A /* Plane.swift */,
 				BBDF9AE91F04EEFA001075DF /* Renderer.swift */,
 				BB32E1F51F0C88B90071D328 /* Shader.swift */,
@@ -272,7 +278,9 @@
 				BB80E34D1F05270700CE018A /* Plane.swift in Sources */,
 				BB32E1F61F0C88B90071D328 /* Shader.swift in Sources */,
 				BBDF9AE81F04DCD4001075DF /* MTLDevice+Behavior.swift in Sources */,
+				BB36527C1F0CC601006A740D /* GeometryWireframeRenderer.swift in Sources */,
 				BBDF9AEA1F04EEFA001075DF /* Renderer.swift in Sources */,
+				BB36527E1F0CC6A3006A740D /* GeometryWireframeBuffer.swift in Sources */,
 				BB80E34B1F05168000CE018A /* GeometryRenderer.swift in Sources */,
 				BB80E3491F0514B500CE018A /* GeometryPlane.swift in Sources */,
 				0C49914D1A7278730028ECBB /* MySceneViewController.swift in Sources */,
@@ -428,6 +436,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8JG22Q59U3;
 				INFOPLIST_FILE = HelloMetal/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.recoursive.HelloMetal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -447,6 +456,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8JG22Q59U3;
 				INFOPLIST_FILE = HelloMetal/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.recoursive.HelloMetal;
 				PRODUCT_NAME = "$(TARGET_NAME)";

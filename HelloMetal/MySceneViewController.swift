@@ -18,11 +18,12 @@ class MySceneViewController: UIViewController {
         
         let device = MTLCreateSystemDefaultDevice()
         self.renderer = Renderer(device: device!)
+        self.renderer.delegate = self
         
         metalLayer = CAMetalLayer()
         metalLayer.device = device
         metalLayer.pixelFormat = .bgra8Unorm
-        metalLayer.framebufferOnly = true
+        metalLayer.framebufferOnly = false
         view.layer.addSublayer(metalLayer)
     }
     
@@ -49,3 +50,22 @@ class MySceneViewController: UIViewController {
         }
     }
 }
+
+extension MySceneViewController : RendererDelegate {
+    
+    func renderer(_ renderer: Renderer, didFinishRenderingWith image: UIImage?) {
+        DispatchQueue.main.async {
+            let view = UIImageView(image: image)
+            view.frame = CGRect.init(x: 0, y: 0, width: 100, height: 100)
+            self.view.addSubview(view)
+        }
+    }
+}
+
+
+
+
+
+
+
+

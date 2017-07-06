@@ -46,13 +46,9 @@ fragment float4 basic_fragment(VertexOut interpolated [[stage_in]],
 
 // MARK: - wireframe shaders
 
-struct PointIn {
-    packed_float2 position;
-};
-
-vertex float4 wireframe_vertex(device PointIn* points [[ buffer(0) ]],
+vertex float4 wireframe_vertex(device VertexIn* points [[ buffer(0) ]],
                                unsigned int vid [[ vertex_id ]]) {
-    return float4(points[vid].position, 0, 0);
+    return float4(points[vid].position, 1.0);
 }
 
 fragment float4 wireframe_fragment(constant float4 &color [[ buffer(0) ]]) {
