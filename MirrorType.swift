@@ -9,11 +9,11 @@
 import Foundation
 import CoreGraphics
 
-public enum MGLMirror {
+public enum MirrorType {
     case none, horizontal, vertical, horizontalAndVertical
 }
 
-extension MGLMirror {
+extension MirrorType {
     
     private func getScale() -> (x: CGFloat, y: CGFloat) {
         switch self {
@@ -24,7 +24,7 @@ extension MGLMirror {
         }
     }
     
-    public var reverseMirror: MGLMirror {
+    public var reverseMirror: MirrorType {
         switch self {
         case .none:                  return .none
         case .horizontal:            return .vertical

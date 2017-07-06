@@ -9,11 +9,11 @@
 import Foundation
 import CoreGraphics
 
-public enum MGLRotation : Int {
+public enum RotationType : Int {
     case none, angle90, angle180, angle270
 }
 
-extension MGLRotation {
+extension RotationType {
     
     public var angle:CGFloat {
         switch self {
@@ -24,7 +24,7 @@ extension MGLRotation {
         }
     }
     
-    public var reverseRotation: MGLRotation {
+    public var reverseRotation: RotationType {
         switch self {
         case .none:     return .none
         case .angle90:  return .angle270
