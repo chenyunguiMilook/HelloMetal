@@ -14,15 +14,6 @@ public func * (m1: CGAffineTransform, m2: CGAffineTransform) -> CGAffineTransfor
     return m1.concatenating(m2)
 }
 
-extension CGAffineTransform : GLMatrix3x3Convertible {
-    
-    public var glmatrix3x3: [GLfloat] {
-        return [GLfloat(a),  GLfloat(b),  0,
-                GLfloat(c),  GLfloat(d),  0,
-                GLfloat(tx), GLfloat(ty), 1]
-    }
-}
-
 extension CGAffineTransform {
     
     public init(rotate radian:CGFloat, aroundCenter center:CGPoint) {
@@ -51,3 +42,4 @@ extension CGAffineTransform {
         self.init(a: m.a, b: m.b, c: m.c, d: m.d, tx: x, ty: y)
     }
 }
+
