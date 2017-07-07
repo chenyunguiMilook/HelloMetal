@@ -15,6 +15,9 @@
 		35023C5019DDB970006F3266 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35023C4E19DDB970006F3266 /* LaunchScreen.xib */; };
 		35023C5C19DDB970006F3266 /* HelloMetalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35023C5B19DDB970006F3266 /* HelloMetalTests.swift */; };
 		35023C6619DDBB29006F3266 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 35023C6519DDBB29006F3266 /* Shaders.metal */; };
+		BB2886AB1F0F8AF3008CC06C /* CustomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2886AA1F0F8AF3008CC06C /* CustomFilter.swift */; };
+		BB2886AD1F0F8C53008CC06C /* CSaturationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2886AC1F0F8C53008CC06C /* CSaturationFilter.swift */; };
+		BB2886AF1F0F8C6B008CC06C /* CSaturationFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = BB2886AE1F0F8C6B008CC06C /* CSaturationFilter.metal */; };
 		BB32E1F61F0C88B90071D328 /* Shader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB32E1F51F0C88B90071D328 /* Shader.swift */; };
 		BB36527C1F0CC601006A740D /* GeometryWireframeRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB36527B1F0CC601006A740D /* GeometryWireframeRenderer.swift */; };
 		BB36527E1F0CC6A3006A740D /* GeometryWireframeBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB36527D1F0CC6A3006A740D /* GeometryWireframeBuffer.swift */; };
@@ -62,6 +65,9 @@
 		35023C5B19DDB970006F3266 /* HelloMetalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloMetalTests.swift; sourceTree = "<group>"; };
 		35023C6519DDBB29006F3266 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = Shaders.metal; path = HelloMetal/Shaders.metal; sourceTree = "<group>"; };
 		43167D7719F9371D00929F8C /* HelloMetal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "HelloMetal-Bridging-Header.h"; path = "HelloMetal/HelloMetal-Bridging-Header.h"; sourceTree = "<group>"; };
+		BB2886AA1F0F8AF3008CC06C /* CustomFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFilter.swift; sourceTree = "<group>"; };
+		BB2886AC1F0F8C53008CC06C /* CSaturationFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSaturationFilter.swift; sourceTree = "<group>"; };
+		BB2886AE1F0F8C6B008CC06C /* CSaturationFilter.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CSaturationFilter.metal; sourceTree = "<group>"; };
 		BB32E1F51F0C88B90071D328 /* Shader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shader.swift; sourceTree = "<group>"; };
 		BB36527B1F0CC601006A740D /* GeometryWireframeRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryWireframeRenderer.swift; sourceTree = "<group>"; };
 		BB36527D1F0CC6A3006A740D /* GeometryWireframeBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryWireframeBuffer.swift; sourceTree = "<group>"; };
@@ -174,6 +180,9 @@
 				BB6E99261F0F6F6900134932 /* FilterProtocol.swift */,
 				BBD921141F0F7FB600106BF7 /* Filter.swift */,
 				BBD921121F0F7D3D00106BF7 /* MetalFilter.swift */,
+				BB2886AA1F0F8AF3008CC06C /* CustomFilter.swift */,
+				BB2886AC1F0F8C53008CC06C /* CSaturationFilter.swift */,
+				BB2886AE1F0F8C6B008CC06C /* CSaturationFilter.metal */,
 				BBD921161F0F823500106BF7 /* GaussianBlurFilter.swift */,
 				BBDF9AE91F04EEFA001075DF /* Renderer.swift */,
 				BB32E1F51F0C88B90071D328 /* Shader.swift */,
@@ -302,6 +311,7 @@
 				35023C6619DDBB29006F3266 /* Shaders.metal in Sources */,
 				BBD921151F0F7FB600106BF7 /* Filter.swift in Sources */,
 				BB85AE2E1F0E2BBE00109861 /* GlobalFunction.swift in Sources */,
+				BB2886AB1F0F8AF3008CC06C /* CustomFilter.swift in Sources */,
 				BBD921131F0F7D3D00106BF7 /* MetalFilter.swift in Sources */,
 				BB80E3431F04F93700CE018A /* MTLTexture+Utils.swift in Sources */,
 				BB4594BB1F0B83E30006FFD0 /* GeometryBuffer.swift in Sources */,
@@ -316,8 +326,10 @@
 				BB36527E1F0CC6A3006A740D /* GeometryWireframeBuffer.swift in Sources */,
 				BB80E34B1F05168000CE018A /* GeometryRenderer.swift in Sources */,
 				BB85AE381F0E317800109861 /* CGAffineTransform+Behavior.swift in Sources */,
+				BB2886AF1F0F8C6B008CC06C /* CSaturationFilter.metal in Sources */,
 				BB85AE321F0E2C1200109861 /* MirrorType.swift in Sources */,
 				BB6E99271F0F6F6900134932 /* FilterProtocol.swift in Sources */,
+				BB2886AD1F0F8C53008CC06C /* CSaturationFilter.swift in Sources */,
 				BB80E3491F0514B500CE018A /* GeometryPlane.swift in Sources */,
 				0C49914D1A7278730028ECBB /* MySceneViewController.swift in Sources */,
 				BB368F3E1F04DA1900391492 /* CGImage+Behavior.swift in Sources */,

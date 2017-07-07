@@ -26,7 +26,8 @@ public class Renderer : NSObject {
     var commandQueue: MTLCommandQueue!
     var model: Plane!
     var texture: MTLTexture!
-    var filter: GaussianBlurFilter!
+    var saturationFilter: CSaturationFilter!
+    var blurFilter: GaussianBlurFilter!
     
     var avaliableResourcesSemaphore: DispatchSemaphore!
     
@@ -44,7 +45,8 @@ public class Renderer : NSObject {
         self.model = Plane(library: library, pixelFormat: .bgra8Unorm)
         self.model.geometry.uvTransform = getUVTransformForFlippedVertically()
         self.texture = loadTexture(imageNamed: "cube.png", device: device)
-        self.filter = GaussianBlurFilter(device: device, sigma: 5.0)
+        self.saturationFilter = CSaturationFilter(library: library, saturation: 2.0)
+        self.blurFilter = GaussianBlurFilter(device: device, sigma: 5.0)
         self.avaliableResourcesSemaphore = DispatchSemaphore(value: availableSources)
     }
     
@@ -64,7 +66,10 @@ public class Renderer : NSObject {
         let filterResult = self.model.filter(texture: texture, use: config, in: commandBuffer)
         
         // MARK: - filter the texture and present it
-        self.filter.filter(texture: filterResult, to: drawable.texture, in: commandBuffer)
+        //let sResult = self.saturationFilter.filter(texture: filterResult, use: config, in: commandBuffer)
+        
+        self.blurFilter.filter(texture: filterResult, to: drawable.texture, in: commandBuffer)
+        //self.saturationFilter.filter(texture: filterResult, to: drawable.texture, in: commandBuffer)
         
         commandBuffer.present(drawable) // the present target could be a MTLTexture
         commandBuffer.commit()
