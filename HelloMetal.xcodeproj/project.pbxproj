@@ -20,6 +20,7 @@
 		BB36527E1F0CC6A3006A740D /* GeometryWireframeBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB36527D1F0CC6A3006A740D /* GeometryWireframeBuffer.swift */; };
 		BB368F3E1F04DA1900391492 /* CGImage+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB368F3D1F04DA1900391492 /* CGImage+Behavior.swift */; };
 		BB4594BB1F0B83E30006FFD0 /* GeometryBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4594BA1F0B83E30006FFD0 /* GeometryBuffer.swift */; };
+		BB6E99271F0F6F6900134932 /* Filterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6E99261F0F6F6900134932 /* Filterable.swift */; };
 		BB80E3411F04F91600CE018A /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3401F04F91600CE018A /* Geometry.swift */; };
 		BB80E3431F04F93700CE018A /* MTLTexture+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3421F04F93700CE018A /* MTLTexture+Utils.swift */; };
 		BB80E3491F0514B500CE018A /* GeometryPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB80E3481F0514B500CE018A /* GeometryPlane.swift */; };
@@ -63,6 +64,7 @@
 		BB36527D1F0CC6A3006A740D /* GeometryWireframeBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryWireframeBuffer.swift; sourceTree = "<group>"; };
 		BB368F3D1F04DA1900391492 /* CGImage+Behavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImage+Behavior.swift"; sourceTree = "<group>"; };
 		BB4594BA1F0B83E30006FFD0 /* GeometryBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryBuffer.swift; sourceTree = "<group>"; };
+		BB6E99261F0F6F6900134932 /* Filterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filterable.swift; sourceTree = "<group>"; };
 		BB80E3401F04F91600CE018A /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		BB80E3421F04F93700CE018A /* MTLTexture+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MTLTexture+Utils.swift"; sourceTree = "<group>"; };
 		BB80E3481F0514B500CE018A /* GeometryPlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryPlane.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				BB36527D1F0CC6A3006A740D /* GeometryWireframeBuffer.swift */,
 				BB36527B1F0CC601006A740D /* GeometryWireframeRenderer.swift */,
 				BB80E34C1F05270700CE018A /* Plane.swift */,
+				BB6E99261F0F6F6900134932 /* Filterable.swift */,
 				BBDF9AE91F04EEFA001075DF /* Renderer.swift */,
 				BB32E1F51F0C88B90071D328 /* Shader.swift */,
 				BB85AE2D1F0E2BBE00109861 /* GlobalFunction.swift */,
@@ -302,6 +305,7 @@
 				BB80E34B1F05168000CE018A /* GeometryRenderer.swift in Sources */,
 				BB85AE381F0E317800109861 /* CGAffineTransform+Behavior.swift in Sources */,
 				BB85AE321F0E2C1200109861 /* MirrorType.swift in Sources */,
+				BB6E99271F0F6F6900134932 /* Filterable.swift in Sources */,
 				BB80E3491F0514B500CE018A /* GeometryPlane.swift in Sources */,
 				0C49914D1A7278730028ECBB /* MySceneViewController.swift in Sources */,
 				BB368F3E1F04DA1900391492 /* CGImage+Behavior.swift in Sources */,
