@@ -9,8 +9,8 @@
 import Foundation
 import CoreGraphics
 
-public func calculateUVTransform(frameBufferSize: CGSize, zoomRect: CGRect, mirror: MirrorType, rotation: RotationType) -> CGAffineTransform {
-    let normalizeSize = CGAffineTransform(scaleX: 1.0/frameBufferSize.width, y: 1.0/frameBufferSize.height)
+public func calculateUVTransform(textureSize: CGSize, zoomRect: CGRect, mirror: MirrorType, rotation: RotationType) -> CGAffineTransform {
+    let normalizeSize = CGAffineTransform(scaleX: 1.0/textureSize.width, y: 1.0/textureSize.height)
     let zoomRect = zoomRect.applying(normalizeSize)
     return getUVTransform(zoomRect: zoomRect, mirror: mirror, rotation: rotation)
 }
