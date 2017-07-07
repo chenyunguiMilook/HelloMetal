@@ -14,9 +14,11 @@ import simd
 public class GeometryRenderer {
     
     let name: String
+    var library: MTLLibrary
     var geometry: Geometry
     var geometryBuffer: GeometryBuffer
-    var texture: MTLTexture?
+    var texture: MTLTexture? // render target
+    var textureConfig: TextureConfig?
     var textureSampler: MTLSamplerState?
     var shader: Shader!
     
@@ -24,72 +26,58 @@ public class GeometryRenderer {
                 library: MTLLibrary,
                 pixelFormat: MTLPixelFormat,
                 geometry: Geometry,
-                texture: MTLTexture?,
                 textureSampler: MTLSamplerState? = nil) {
         self.name = name
+        self.library = library
         self.geometry = geometry
         self.geometryBuffer = GeometryBuffer(geometry: geometry, device: library.device, inflightBuffersCount: availableSources)
         self.shader = Shader(library: library, pixelFormat: pixelFormat)
-        self.texture = texture
         self.textureSampler = textureSampler ?? library.device.defaultSampler
     }
     
-    public func render(commandEncoder: MTLRenderCommandEncoder) { // means canvas for draw
+    public func render(commandBuffer: MTLCommandBuffer, texture: MTLTexture, destination: MTLTexture) {
+        
+        let renderPassDescriptor = MTLRenderPassDescriptor()
+        renderPassDescriptor.colorAttachments[0].texture = destination
+        renderPassDescriptor.colorAttachments[0].loadAction = .clear
+        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 0)
+        renderPassDescriptor.colorAttachments[0].storeAction = .store
+        
+        guard let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
         
         let (vertexBuffer, uvBuffer) = geometryBuffer.nextGeometryBuffer()
         commandEncoder.setRenderPipelineState(shader.renderPiplineState)
         commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         commandEncoder.setVertexBuffer(uvBuffer, offset: 0, index: 1)
-        
-        if let texture = texture, let textureSampler = textureSampler {
-            commandEncoder.setFragmentTexture(texture, index: 0)
-            commandEncoder.setFragmentSamplerState(textureSampler, index: 0)
-        }
-        
+        commandEncoder.setFragmentTexture(texture, index: 0)
+        commandEncoder.setFragmentSamplerState(textureSampler!, index: 0)
         commandEncoder.drawIndexedPrimitives(type: .triangle,
                                             indexCount: geometryBuffer.indexCount,
                                             indexType: .uint32,
                                             indexBuffer: geometryBuffer.indexBuffer,
                                             indexBufferOffset: 0)
+        commandEncoder.endEncoding()
     }
 }
 
-public extension GeometryRenderer {
+extension GeometryRenderer : Filterable {
     
-    public convenience init(name: String,
-                            library: MTLLibrary,
-                            pixelFormat: MTLPixelFormat,
-                            geometry: Geometry,
-                            texture: String,
-                            textureSampler: MTLSamplerState? = nil) {
+    public func filter(texture: MTLTexture, use config: TextureConfig?, in commandBuffer: MTLCommandBuffer) -> MTLTexture {
         
-        let texture = loadTexture(imageNamed: texture, device: library.device)
-        
-        self.init(name: name,
-                  library: library,
-                  pixelFormat: pixelFormat,
-                  geometry: geometry,
-                  texture: texture,
-                  textureSampler: textureSampler)
+        let config = config ?? TextureConfig(texture: texture)
+        if self.texture == nil || textureConfig != config {
+            self.texture = config.makeTexture(device: library.device, usage: [.shaderRead, .renderTarget])
+            self.textureConfig = config
+        }
+        self.render(commandBuffer: commandBuffer, texture: texture, destination: self.texture!)
+        return self.texture!
     }
     
-    public convenience init(name: String,
-                            library: MTLLibrary,
-                            pixelFormat: MTLPixelFormat,
-                            geometry: Geometry,
-                            texture: UIImage,
-                            textureSampler: MTLSamplerState? = nil) {
-        
-        let texture = loadTexture(image: texture, device: library.device)
-        
-        self.init(name: name,
-                  library: library,
-                  pixelFormat: pixelFormat,
-                  geometry: geometry,
-                  texture: texture,
-                  textureSampler: textureSampler)
+    public func filter(texture: MTLTexture, to destination: MTLTexture, in commandBuffer: MTLCommandBuffer) {
+        self.render(commandBuffer: commandBuffer, texture: texture, destination: destination)
     }
 }
+
 
 
 

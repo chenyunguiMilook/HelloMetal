@@ -27,6 +27,7 @@ public class Renderer : NSObject {
     var commandQueue: MTLCommandQueue!
     var model: Plane!
     var modelWireframe: GeometryWireframeRenderer!
+    var texture: MTLTexture!
     var filter: MPSImageGaussianBlur!
     
     var avaliableResourcesSemaphore: DispatchSemaphore!
@@ -42,8 +43,9 @@ public class Renderer : NSObject {
         self.device = device
         self.library = device.makeDefaultLibrary()!
         self.commandQueue = device.makeCommandQueue()
-        self.model = Plane(library: library, pixelFormat: .bgra8Unorm, texture: "cube.png")
+        self.model = Plane(library: library, pixelFormat: .bgra8Unorm)
         self.model.geometry.uvTransform = getUVTransformForFlippedVertically()
+        self.texture = loadTexture(imageNamed: "cube.png", device: device)
         self.filter = MPSImageGaussianBlur(device: device, sigma: 5.0)
         
         self.modelWireframe = GeometryWireframeRenderer(name: "", library: library, pixelFormat: .bgra8Unorm, geometry: model.geometry, color: .red)
@@ -55,14 +57,6 @@ public class Renderer : NSObject {
         _ = self.avaliableResourcesSemaphore.wait(timeout: DispatchTime.distantFuture)
         
         // MARK: - start render model to a texture
-        guard let renderTarget = createBlankTexture(device: device, texture: drawable.texture, usage:  [.shaderRead, .renderTarget]) else { return }
-        
-        let renderPassDescriptor = MTLRenderPassDescriptor()
-        renderPassDescriptor.colorAttachments[0].texture = renderTarget
-        renderPassDescriptor.colorAttachments[0].loadAction = .clear
-        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 0)
-        renderPassDescriptor.colorAttachments[0].storeAction = .store
-        
         guard let commandBuffer = commandQueue.makeCommandBuffer() else { return }
         commandBuffer.addCompletedHandler { _ in
             // copy pixel buffer from drawable.texture
@@ -70,14 +64,11 @@ public class Renderer : NSObject {
             self.avaliableResourcesSemaphore.signal()
         }
         
-        guard let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
-        self.model.render(commandEncoder: commandEncoder)
-        //self.modelWireframe.render(commandEncoder: commandEncoder)
-        
-        commandEncoder.endEncoding()
+        let config = TextureConfig.init(texture: drawable.texture)
+        let filterResult = self.model.filter(texture: texture, use: config, in: commandBuffer)
         
         // MARK: - filter the texture and present it
-        filter.encode(commandBuffer: commandBuffer, sourceTexture: renderTarget, destinationTexture: drawable.texture)
+        filter.encode(commandBuffer: commandBuffer, sourceTexture: filterResult, destinationTexture: drawable.texture)
         
         commandBuffer.present(drawable) // the present target could be a MTLTexture
         commandBuffer.commit()
