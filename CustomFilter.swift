@@ -44,6 +44,7 @@ extension CustomFilter : FilterProtocol {
         
         guard let commandEncoder = commandBuffer.makeComputeCommandEncoder() else { return }
         commandEncoder.setComputePipelineState(self.pipelineState)
+        // MARK: - Notice first texture for output
         commandEncoder.setTexture(destination, index: 0)
         commandEncoder.setTexture(texture, index: 1)
         
