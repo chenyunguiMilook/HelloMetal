@@ -31,6 +31,9 @@
 		BB85AE301F0E2BF500109861 /* RotationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85AE2F1F0E2BF500109861 /* RotationType.swift */; };
 		BB85AE321F0E2C1200109861 /* MirrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85AE311F0E2C1200109861 /* MirrorType.swift */; };
 		BB85AE381F0E317800109861 /* CGAffineTransform+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85AE371F0E317800109861 /* CGAffineTransform+Behavior.swift */; };
+		BBD921131F0F7D3D00106BF7 /* MetalFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD921121F0F7D3D00106BF7 /* MetalFilter.swift */; };
+		BBD921151F0F7FB600106BF7 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD921141F0F7FB600106BF7 /* Filter.swift */; };
+		BBD921171F0F823500106BF7 /* GaussianBlurFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD921161F0F823500106BF7 /* GaussianBlurFilter.swift */; };
 		BBDF9AE81F04DCD4001075DF /* MTLDevice+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDF9AE71F04DCD4001075DF /* MTLDevice+Behavior.swift */; };
 		BBDF9AEA1F04EEFA001075DF /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDF9AE91F04EEFA001075DF /* Renderer.swift */; };
 /* End PBXBuildFile section */
@@ -75,6 +78,9 @@
 		BB85AE2F1F0E2BF500109861 /* RotationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationType.swift; sourceTree = "<group>"; };
 		BB85AE311F0E2C1200109861 /* MirrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorType.swift; sourceTree = "<group>"; };
 		BB85AE371F0E317800109861 /* CGAffineTransform+Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGAffineTransform+Behavior.swift"; sourceTree = "<group>"; };
+		BBD921121F0F7D3D00106BF7 /* MetalFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalFilter.swift; sourceTree = "<group>"; };
+		BBD921141F0F7FB600106BF7 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		BBD921161F0F823500106BF7 /* GaussianBlurFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaussianBlurFilter.swift; sourceTree = "<group>"; };
 		BBDF9AE71F04DCD4001075DF /* MTLDevice+Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MTLDevice+Behavior.swift"; sourceTree = "<group>"; };
 		BBDF9AE91F04EEFA001075DF /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,6 +172,9 @@
 				BB36527B1F0CC601006A740D /* GeometryWireframeRenderer.swift */,
 				BB80E34C1F05270700CE018A /* Plane.swift */,
 				BB6E99261F0F6F6900134932 /* Filterable.swift */,
+				BBD921141F0F7FB600106BF7 /* Filter.swift */,
+				BBD921121F0F7D3D00106BF7 /* MetalFilter.swift */,
+				BBD921161F0F823500106BF7 /* GaussianBlurFilter.swift */,
 				BBDF9AE91F04EEFA001075DF /* Renderer.swift */,
 				BB32E1F51F0C88B90071D328 /* Shader.swift */,
 				BB85AE2D1F0E2BBE00109861 /* GlobalFunction.swift */,
@@ -291,11 +300,14 @@
 			files = (
 				BB85AE301F0E2BF500109861 /* RotationType.swift in Sources */,
 				35023C6619DDBB29006F3266 /* Shaders.metal in Sources */,
+				BBD921151F0F7FB600106BF7 /* Filter.swift in Sources */,
 				BB85AE2E1F0E2BBE00109861 /* GlobalFunction.swift in Sources */,
+				BBD921131F0F7D3D00106BF7 /* MetalFilter.swift in Sources */,
 				BB80E3431F04F93700CE018A /* MTLTexture+Utils.swift in Sources */,
 				BB4594BB1F0B83E30006FFD0 /* GeometryBuffer.swift in Sources */,
 				BB80E3411F04F91600CE018A /* Geometry.swift in Sources */,
 				BB85AE2C1F0E240000109861 /* simd+Utils.swift in Sources */,
+				BBD921171F0F823500106BF7 /* GaussianBlurFilter.swift in Sources */,
 				BB80E34D1F05270700CE018A /* Plane.swift in Sources */,
 				BB32E1F61F0C88B90071D328 /* Shader.swift in Sources */,
 				BBDF9AE81F04DCD4001075DF /* MTLDevice+Behavior.swift in Sources */,

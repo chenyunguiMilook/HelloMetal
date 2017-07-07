@@ -26,9 +26,8 @@ public class Renderer : NSObject {
     var pipelineState: MTLRenderPipelineState!
     var commandQueue: MTLCommandQueue!
     var model: Plane!
-    var modelWireframe: GeometryWireframeRenderer!
     var texture: MTLTexture!
-    var filter: MPSImageGaussianBlur!
+    var filter: GaussianBlurFilter!
     
     var avaliableResourcesSemaphore: DispatchSemaphore!
     
@@ -46,9 +45,7 @@ public class Renderer : NSObject {
         self.model = Plane(library: library, pixelFormat: .bgra8Unorm)
         self.model.geometry.uvTransform = getUVTransformForFlippedVertically()
         self.texture = loadTexture(imageNamed: "cube.png", device: device)
-        self.filter = MPSImageGaussianBlur(device: device, sigma: 5.0)
-        
-        self.modelWireframe = GeometryWireframeRenderer(name: "", library: library, pixelFormat: .bgra8Unorm, geometry: model.geometry, color: .red)
+        self.filter = GaussianBlurFilter(device: device, sigma: 5.0)
         self.avaliableResourcesSemaphore = DispatchSemaphore(value: availableSources)
     }
     
@@ -68,7 +65,7 @@ public class Renderer : NSObject {
         let filterResult = self.model.filter(texture: texture, use: config, in: commandBuffer)
         
         // MARK: - filter the texture and present it
-        filter.encode(commandBuffer: commandBuffer, sourceTexture: filterResult, destinationTexture: drawable.texture)
+        self.filter.filter(texture: filterResult, to: drawable.texture, in: commandBuffer)
         
         commandBuffer.present(drawable) // the present target could be a MTLTexture
         commandBuffer.commit()

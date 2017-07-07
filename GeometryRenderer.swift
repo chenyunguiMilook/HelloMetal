@@ -11,14 +11,12 @@ import Metal
 import MetalKit
 import simd
 
-public class GeometryRenderer {
+public class GeometryRenderer : Filter {
     
     let name: String
     var library: MTLLibrary
     var geometry: Geometry
     var geometryBuffer: GeometryBuffer
-    var texture: MTLTexture? // render target
-    var textureConfig: TextureConfig?
     var textureSampler: MTLSamplerState?
     var shader: Shader!
     
@@ -33,6 +31,7 @@ public class GeometryRenderer {
         self.geometryBuffer = GeometryBuffer(geometry: geometry, device: library.device, inflightBuffersCount: availableSources)
         self.shader = Shader(library: library, pixelFormat: pixelFormat)
         self.textureSampler = textureSampler ?? library.device.defaultSampler
+        super.init(device: library.device)
     }
     
     public func render(commandBuffer: MTLCommandBuffer, texture: MTLTexture, destination: MTLTexture) {
@@ -64,13 +63,9 @@ extension GeometryRenderer : Filterable {
     
     public func filter(texture: MTLTexture, use config: TextureConfig?, in commandBuffer: MTLCommandBuffer) -> MTLTexture {
         
-        let config = config ?? TextureConfig(texture: texture)
-        if self.texture == nil || textureConfig != config {
-            self.texture = config.makeTexture(device: library.device, usage: [.shaderRead, .renderTarget])
-            self.textureConfig = config
-        }
-        self.render(commandBuffer: commandBuffer, texture: texture, destination: self.texture!)
-        return self.texture!
+        let renderTarget = self.getRenderTarget(texture: texture, config: config)
+        self.render(commandBuffer: commandBuffer, texture: texture, destination: renderTarget)
+        return renderTarget
     }
     
     public func filter(texture: MTLTexture, to destination: MTLTexture, in commandBuffer: MTLCommandBuffer) {
