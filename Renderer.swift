@@ -23,7 +23,6 @@ public class Renderer : NSObject {
     
     var device: MTLDevice!
     var library: MTLLibrary!
-    var pipelineState: MTLRenderPipelineState!
     var commandQueue: MTLCommandQueue!
     var model: Plane!
     var texture: MTLTexture!
