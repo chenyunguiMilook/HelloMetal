@@ -9,7 +9,7 @@
 import Foundation
 import Metal
 
-public protocol Filterable {
+public protocol FilterProtocol {
     
     // as intermediate processing, if destination config is nil, then config generate from texture
     func filter(texture: MTLTexture, use config: TextureConfig?, `in` commandBuffer: MTLCommandBuffer) -> MTLTexture

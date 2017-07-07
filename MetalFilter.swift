@@ -19,7 +19,7 @@ public class MetalFilter : Filter {
     }
 }
 
-extension MetalFilter : Filterable {
+extension MetalFilter : FilterProtocol {
     
     public func filter(texture: MTLTexture, use config: TextureConfig?, `in` commandBuffer: MTLCommandBuffer) -> MTLTexture {
         let renderTarget = self.getRenderTarget(texture: texture, config: config)

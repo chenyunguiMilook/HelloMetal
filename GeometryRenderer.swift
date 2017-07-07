@@ -59,7 +59,7 @@ public class GeometryRenderer : Filter {
     }
 }
 
-extension GeometryRenderer : Filterable {
+extension GeometryRenderer : FilterProtocol {
     
     public func filter(texture: MTLTexture, use config: TextureConfig?, in commandBuffer: MTLCommandBuffer) -> MTLTexture {
         
