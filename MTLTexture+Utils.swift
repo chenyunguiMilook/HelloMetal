@@ -44,6 +44,22 @@ public func createBlankTexure(device: MTLDevice, pixelFormat:MTLPixelFormat, wid
     return device.makeTexture( descriptor:textureDescriptor)
 }
 
+public func createBlankTexture(device: MTLDevice, texture: MTLTexture) -> MTLTexture? {
+    
+    let width = texture.width
+    let height = texture.height
+    let pixelFormat = texture.pixelFormat
+    
+    let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+        pixelFormat:pixelFormat,
+        width:width,
+        height:height,
+        mipmapped:false)
+    textureDescriptor.usage = [.shaderRead, .renderTarget]
+    
+    return device.makeTexture( descriptor:textureDescriptor)
+}
+
 public func createMutableTexture(device: MTLDevice, commandQueue: MTLCommandQueue, texture:MTLTexture) -> MTLTexture?
 {
     let width:Int = texture.width

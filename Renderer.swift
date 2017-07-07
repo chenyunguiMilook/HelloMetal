@@ -64,9 +64,11 @@ public class Renderer : NSObject {
         
         _ = self.avaliableResourcesSemaphore.wait(timeout: DispatchTime.distantFuture)
         
-        // MARK: start render model to a texture
+        // MARK: - start render model to a texture
+        guard let renderTarget = createBlankTexture(device: device, texture: drawable.texture) else { return }
+        
         let renderPassDescriptor = MTLRenderPassDescriptor()
-        renderPassDescriptor.colorAttachments[0].texture = drawable.texture
+        renderPassDescriptor.colorAttachments[0].texture = renderTarget
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 0)
         renderPassDescriptor.colorAttachments[0].storeAction = .store
@@ -87,9 +89,9 @@ public class Renderer : NSObject {
         
         commandEncoder.endEncoding()
         
-        // MARK: filter the texture and present it
-        
-        
+        // MARK: - filter the texture and present it
+        let filter = MPSImageGaussianBlur.init(device: device, sigma: 15.0)
+        filter.encode(commandBuffer: commandBuffer, sourceTexture: renderTarget, destinationTexture: drawable.texture)
         
         commandBuffer.present(drawable) // the present target could be a MTLTexture
         commandBuffer.commit()
