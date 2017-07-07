@@ -65,7 +65,7 @@ public class Renderer : NSObject {
         _ = self.avaliableResourcesSemaphore.wait(timeout: DispatchTime.distantFuture)
         
         // MARK: - start render model to a texture
-        guard let renderTarget = createBlankTexture(device: device, texture: drawable.texture) else { return }
+        guard let renderTarget = createBlankTexture(device: device, texture: drawable.texture, usage:  [.shaderRead, .renderTarget]) else { return }
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = renderTarget
