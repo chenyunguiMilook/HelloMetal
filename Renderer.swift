@@ -44,20 +44,10 @@ public class Renderer : NSObject {
         self.commandQueue = device.makeCommandQueue()
         self.model = Plane(library: library, pixelFormat: .bgra8Unorm, texture: "cube.png")
         self.model.geometry.uvTransform = getUVTransformForFlippedVertically()
-        self.filter = MPSImageGaussianBlur.init(device: device, sigma: 0.5)
+        self.filter = MPSImageGaussianBlur(device: device, sigma: 5.0)
         
         self.modelWireframe = GeometryWireframeRenderer(name: "", library: library, pixelFormat: .bgra8Unorm, geometry: model.geometry, color: .red)
         self.avaliableResourcesSemaphore = DispatchSemaphore(value: availableSources)
-    }
-    
-    public func renderFilter(in drawable: CAMetalDrawable) {
-        
-//        guard let commandBuffer = commandQueue.makeCommandBuffer() else { return }
-//        guard let texture = loadTexture(imageNamed: "cube.png", device: device) else { return }
-//        let commandEncoder = commandBuffer.makeComputeCommandEncoder()
-//        self.filter.encode(commandBuffer: commandBuffer, sourceTexture: texture, destinationTexture: drawable.texture)
-        
-        
     }
     
     public func render(in drawable: CAMetalDrawable) {
@@ -80,17 +70,13 @@ public class Renderer : NSObject {
             self.avaliableResourcesSemaphore.signal()
         }
         
-        guard let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
-            return
-        }
-        
+        guard let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
         self.model.render(commandEncoder: commandEncoder)
         //self.modelWireframe.render(commandEncoder: commandEncoder)
         
         commandEncoder.endEncoding()
         
         // MARK: - filter the texture and present it
-        let filter = MPSImageGaussianBlur.init(device: device, sigma: 15.0)
         filter.encode(commandBuffer: commandBuffer, sourceTexture: renderTarget, destinationTexture: drawable.texture)
         
         commandBuffer.present(drawable) // the present target could be a MTLTexture

@@ -51,7 +51,7 @@ class MySceneViewController: UIViewController {
     
     @objc func onTap(gesture: UIGestureRecognizer) {
         
-        let geometry = self.renderer.model.geometry
+        //let geometry = self.renderer.model.geometry
         
         self.render()
     }
