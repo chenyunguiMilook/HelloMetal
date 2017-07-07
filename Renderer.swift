@@ -68,8 +68,8 @@ public class Renderer : NSObject {
         // MARK: - filter the texture and present it
         //let sResult = self.saturationFilter.filter(texture: filterResult, use: config, in: commandBuffer)
         
-        self.blurFilter.filter(texture: filterResult, to: drawable.texture, in: commandBuffer)
-        //self.saturationFilter.filter(texture: filterResult, to: drawable.texture, in: commandBuffer)
+        //self.blurFilter.filter(texture: filterResult, to: drawable.texture, in: commandBuffer)
+        self.saturationFilter.filter(texture: filterResult, to: drawable.texture, in: commandBuffer)
         
         commandBuffer.present(drawable) // the present target could be a MTLTexture
         commandBuffer.commit()

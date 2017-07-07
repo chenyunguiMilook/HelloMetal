@@ -44,16 +44,19 @@ extension CustomFilter : FilterProtocol {
         
         guard let commandEncoder = commandBuffer.makeComputeCommandEncoder() else { return }
         commandEncoder.setComputePipelineState(self.pipelineState)
-        commandEncoder.setTexture(texture, index: 0)
+        commandEncoder.setTexture(destination, index: 0)
         commandEncoder.setTexture(texture, index: 1)
         
         let parameters = self.getParameters()
         for i in 0 ..< parameters.count {
             var value = parameters[i]
-            let size = max(MemoryLayout<Float>.size, 16)
-            let buffer = library.device.makeBuffer(bytes: &value, length: size, options: .storageModeShared)
+            let size = MemoryLayout<Float>.size
+            let buffer = library.device.makeBuffer(bytes: &value, length: size, options: [])
             commandEncoder.setBuffer(buffer, offset: 0, index: i)
         }
+        let groups = MTLSizeMake(texture.width/16, texture.height/16, 1)
+        let threads = MTLSizeMake(16, 16, 1)
+        commandEncoder.dispatchThreadgroups(groups, threadsPerThreadgroup: threads)
         commandEncoder.endEncoding()
     }
 }
