@@ -62,10 +62,11 @@ struct PointOut {
 };
 
 vertex PointOut point_vertex(const device packed_float3* vertex_array [[ buffer(0) ]],
+                             constant float &size [[ buffer(1) ]],
                               unsigned int vertexID [[ vertex_id ]]) {
     PointOut out;
     out.position = float4(vertex_array[vertexID], 1.0);
-    out.pointSize = 25.0;
+    out.pointSize = size;
     return out;
 }
 

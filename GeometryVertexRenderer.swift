@@ -17,6 +17,7 @@ public class GeometryVertexRenderer {
     var geometry: Geometry
     var geometryBuffer: GeometryBuffer!
     var shader: Shader!
+    var radius: Float = 0
     var color: UIColor!
     var colorFloats: [Float] = [1, 0, 0, 1]
     
@@ -24,11 +25,13 @@ public class GeometryVertexRenderer {
                 library: MTLLibrary,
                 pixelFormat: MTLPixelFormat,
                 geometry: Geometry,
+                radius: Float,
                 color: UIColor) {
         self.name = name
         self.geometry = geometry
         self.geometryBuffer = GeometryBuffer(geometry: geometry, device: library.device, inflightBuffersCount: availableSources)
         self.shader = Shader(library: library, pixelFormat: pixelFormat, vertexFuncName: "point_vertex", fragmentFuncName: "point_fragment")
+        self.radius = radius
         self.color = color
         var (r, g, b, a) = (CGFloat(), CGFloat(), CGFloat(), CGFloat())
         self.color.getRed(&r, green: &g, blue: &b, alpha: &a)
@@ -46,6 +49,7 @@ public class GeometryVertexRenderer {
         
         let (vBuffer, _) = geometryBuffer.nextGeometryBuffer()
         commandEncoder.setVertexBuffer(vBuffer, offset: 0, index: 0)
+        commandEncoder.setVertexBytes(&radius, length: MemoryLayout<Float>.size, index: 1)
         
         commandEncoder.setFragmentBytes(&colorFloats, length: MemoryLayout<float4>.size, index: 0)
         commandEncoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: geometry.vertices.count, instanceCount: 1)
