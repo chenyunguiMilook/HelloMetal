@@ -15,7 +15,7 @@ public class GeometryWireframeRenderer {
     
     let name: String
     var geometry: Geometry
-    var edgeBuffer: MTLBuffer!
+    var geometryBuffer: GeometryWireframeBuffer!
     var shader: Shader!
     var color: UIColor!
     var colorFloats: [Float] = [1, 0, 0, 1]
@@ -27,7 +27,7 @@ public class GeometryWireframeRenderer {
                 color: UIColor) {
         self.name = name
         self.geometry = geometry
-        self.edgeBuffer = library.device.makeBuffer(bytes: geometry.edgeBuffer, length: geometry.edgeSize, options: [])
+        self.geometryBuffer = GeometryWireframeBuffer(geometry: geometry, device: library.device, inflightBuffersCount: availableSources)
         self.shader = Shader(library: library, pixelFormat: pixelFormat, vertexFuncName: "wireframe_vertex", fragmentFuncName: "wireframe_fragment")
         self.color = color
         var (r, g, b, a) = (CGFloat(), CGFloat(), CGFloat(), CGFloat())
@@ -43,7 +43,7 @@ public class GeometryWireframeRenderer {
         
         guard let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else { return }
         commandEncoder.setRenderPipelineState(shader.renderPiplineState)
-        commandEncoder.setVertexBuffer(edgeBuffer, offset: 0, index: 0)
+        commandEncoder.setVertexBuffer(geometryBuffer.nextGeometryBuffer(), offset: 0, index: 0)
         
         commandEncoder.setFragmentBytes(&colorFloats, length: MemoryLayout<float4>.size, index: 0)
         commandEncoder.drawPrimitives(type: .line, vertexStart: 0, vertexCount: geometry.edgeCount, instanceCount: 1)
