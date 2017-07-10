@@ -17,22 +17,18 @@ public class GeometryWireframeRenderer {
     var geometry: Geometry
     var geometryBuffer: GeometryWireframeBuffer!
     var shader: Shader!
-    var color: UIColor!
-    var colorFloats: [Float] = [1, 0, 0, 1]
+    var color: Color!
     
     public init(name: String,
                 library: MTLLibrary,
                 pixelFormat: MTLPixelFormat,
                 geometry: Geometry,
-                color: UIColor) {
+                color: Color) {
         self.name = name
         self.geometry = geometry
         self.geometryBuffer = GeometryWireframeBuffer(geometry: geometry, device: library.device, inflightBuffersCount: availableSources)
         self.shader = Shader(library: library, pixelFormat: pixelFormat, vertexFuncName: "wireframe_vertex", fragmentFuncName: "wireframe_fragment")
         self.color = color
-        var (r, g, b, a) = (CGFloat(), CGFloat(), CGFloat(), CGFloat())
-        self.color.getRed(&r, green: &g, blue: &b, alpha: &a)
-        self.colorFloats = [Float(r), Float(g), Float(b), Float(a)]
     }
     
     public func render(commandBuffer: MTLCommandBuffer, destination: MTLTexture) {
@@ -45,7 +41,7 @@ public class GeometryWireframeRenderer {
         commandEncoder.setRenderPipelineState(shader.renderPiplineState)
         commandEncoder.setVertexBuffer(geometryBuffer.nextGeometryBuffer(), offset: 0, index: 0)
         
-        commandEncoder.setFragmentBytes(&colorFloats, length: MemoryLayout<float4>.size, index: 0)
+        commandEncoder.setFragment(value: &color, for: 0)
         commandEncoder.drawPrimitives(type: .line, vertexStart: 0, vertexCount: geometry.edgeCount, instanceCount: 1)
         commandEncoder.endEncoding()
     }
