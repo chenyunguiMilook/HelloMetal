@@ -70,7 +70,11 @@ extension Geometry {
 extension Geometry {
     
     public var edgeSize: Int {
-        return MemoryLayout<Float>.size * indices.count * 3 * 4
+        return MemoryLayout<Float>.size * edgeCount
+    }
+    
+    public var edgeCount: Int {
+        return indices.count * 3 * 4
     }
     
     public var edgeBuffer: [Float] {

@@ -25,6 +25,7 @@ public class Renderer : NSObject {
     var library: MTLLibrary!
     var commandQueue: MTLCommandQueue!
     var model: Plane!
+    var wireframeRender: GeometryWireframeRenderer!
     var texture: MTLTexture!
     var saturationFilter: CSaturationFilter!
     var blurFilter: GaussianBlurFilter!
@@ -44,6 +45,7 @@ public class Renderer : NSObject {
         self.commandQueue = device.makeCommandQueue()
         self.model = Plane(library: library, pixelFormat: .bgra8Unorm)
         self.model.geometry.uvTransform = getUVTransformForFlippedVertically()
+        self.wireframeRender = GeometryWireframeRenderer(name: "", library: library, pixelFormat: .bgra8Unorm, geometry: model.geometry, color: .red)
         self.texture = loadTexture(imageNamed: "cube.png", device: device)
         self.saturationFilter = CSaturationFilter(library: library, saturation: 2.0)
         self.blurFilter = GaussianBlurFilter(device: device, sigma: 5.0)
@@ -64,6 +66,8 @@ public class Renderer : NSObject {
         
         let config = TextureConfig.init(texture: drawable.texture)
         let filterResult = self.model.filter(texture: texture, use: config, in: commandBuffer)
+        
+        self.wireframeRender.render(commandBuffer: commandBuffer, destination: filterResult)
         
         // MARK: - filter the texture and present it
         //let sResult = self.saturationFilter.filter(texture: filterResult, use: config, in: commandBuffer)

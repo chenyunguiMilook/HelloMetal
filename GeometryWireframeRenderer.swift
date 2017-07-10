@@ -15,7 +15,7 @@ public class GeometryWireframeRenderer {
     
     let name: String
     var geometry: Geometry
-    var geometryBuffer: GeometryBuffer
+    var edgeBuffer: MTLBuffer!
     var shader: Shader!
     var color: UIColor!
     
@@ -26,27 +26,25 @@ public class GeometryWireframeRenderer {
                 color: UIColor) {
         self.name = name
         self.geometry = geometry
-        self.geometryBuffer = GeometryBuffer(geometry: geometry, device: library.device, inflightBuffersCount: availableSources)
+        self.edgeBuffer = library.device.makeBuffer(bytes: geometry.edgeBuffer, length: geometry.edgeSize, options: .storageModeShared)
         self.shader = Shader(library: library, pixelFormat: pixelFormat, vertexFuncName: "wireframe_vertex", fragmentFuncName: "wireframe_fragment")
         self.color = color
     }
     
-    public func render(commandEncoder: MTLRenderCommandEncoder) { // means canvas for draw
+    public func render(commandBuffer: MTLCommandBuffer, destination: MTLTexture) {
         
-        let (vertexBuffer, _) = geometryBuffer.nextGeometryBuffer()
+        let descriptor = MTLRenderPassDescriptor()
+        descriptor.colorAttachments[0].texture = destination
+        descriptor.colorAttachments[0].loadAction = .load
+        
+        guard let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else { return }
         commandEncoder.setRenderPipelineState(shader.renderPiplineState)
-        commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        commandEncoder.setVertexBuffer(edgeBuffer, offset: 0, index: 0)
         
         var color = float4(0.0, 0.5, 1.0, 1.0)
         commandEncoder.setFragmentBytes(&color, length: MemoryLayout<float4>.size, index: 0)
-        
-        commandEncoder.drawPrimitives(type: .line, vertexStart: 0, vertexCount: 2, instanceCount: 1)
-        
-//        commandEncoder.drawIndexedPrimitives(type: .line,
-//                                             indexCount: geometryBuffer.indexCount,
-//                                             indexType: .uint32,
-//                                             indexBuffer: geometryBuffer.indexBuffer,
-//                                             indexBufferOffset: 0)
+        commandEncoder.drawPrimitives(type: .line, vertexStart: 0, vertexCount: geometry.edgeCount, instanceCount: 1)
+        commandEncoder.endEncoding()
     }
 }
 
