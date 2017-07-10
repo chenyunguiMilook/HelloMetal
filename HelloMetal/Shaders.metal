@@ -46,9 +46,9 @@ fragment float4 basic_fragment(VertexOut interpolated [[stage_in]],
 
 // MARK: - wireframe shaders
 
-vertex float4 wireframe_vertex(const device packed_float3* vertex_array [[ buffer(0) ]],
+vertex float4 wireframe_vertex(const device packed_float2* vertex_array [[ buffer(0) ]],
                            unsigned int vertexID [[ vertex_id ]]) {
-    return float4(vertex_array[vertexID], 1.0);
+    return float4(vertex_array[vertexID], 0, 1.0);
 }
 fragment float4 wireframe_fragment(constant float4 &color [[ buffer(0) ]]) {
     return color;
