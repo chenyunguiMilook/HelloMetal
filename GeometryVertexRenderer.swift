@@ -20,7 +20,7 @@ public class GeometryVertexRenderer {
     var radius: Float = 0
     var color: Color!
     
-    public init(name: String,
+    public init(name: String = "plane_vertex",
                 library: MTLLibrary,
                 pixelFormat: MTLPixelFormat,
                 geometry: Geometry,

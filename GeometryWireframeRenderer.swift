@@ -19,7 +19,7 @@ public class GeometryWireframeRenderer {
     var shader: Shader!
     var color: Color!
     
-    public init(name: String,
+    public init(name: String = "plane_wireframe",
                 library: MTLLibrary,
                 pixelFormat: MTLPixelFormat,
                 geometry: Geometry,
