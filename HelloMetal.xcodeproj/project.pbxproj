@@ -34,6 +34,7 @@
 		BB85AE321F0E2C1200109861 /* MirrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85AE311F0E2C1200109861 /* MirrorType.swift */; };
 		BB85AE381F0E317800109861 /* CGAffineTransform+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85AE371F0E317800109861 /* CGAffineTransform+Behavior.swift */; };
 		BBA8290A1F1347F1006FA316 /* GeometryWireframeBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA829091F1347F1006FA316 /* GeometryWireframeBuffer.swift */; };
+		BBA8290C1F134C7C006FA316 /* GeometryVertexRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA8290B1F134C7C006FA316 /* GeometryVertexRenderer.swift */; };
 		BBD921131F0F7D3D00106BF7 /* MetalFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD921121F0F7D3D00106BF7 /* MetalFilter.swift */; };
 		BBD921151F0F7FB600106BF7 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD921141F0F7FB600106BF7 /* Filter.swift */; };
 		BBD921171F0F823500106BF7 /* GaussianBlurFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD921161F0F823500106BF7 /* GaussianBlurFilter.swift */; };
@@ -84,6 +85,7 @@
 		BB85AE311F0E2C1200109861 /* MirrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorType.swift; sourceTree = "<group>"; };
 		BB85AE371F0E317800109861 /* CGAffineTransform+Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGAffineTransform+Behavior.swift"; sourceTree = "<group>"; };
 		BBA829091F1347F1006FA316 /* GeometryWireframeBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryWireframeBuffer.swift; sourceTree = "<group>"; };
+		BBA8290B1F134C7C006FA316 /* GeometryVertexRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryVertexRenderer.swift; sourceTree = "<group>"; };
 		BBD921121F0F7D3D00106BF7 /* MetalFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalFilter.swift; sourceTree = "<group>"; };
 		BBD921141F0F7FB600106BF7 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		BBD921161F0F823500106BF7 /* GaussianBlurFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaussianBlurFilter.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				BB80E34A1F05168000CE018A /* GeometryRenderer.swift */,
 				BBA829091F1347F1006FA316 /* GeometryWireframeBuffer.swift */,
 				BB36527B1F0CC601006A740D /* GeometryWireframeRenderer.swift */,
+				BBA8290B1F134C7C006FA316 /* GeometryVertexRenderer.swift */,
 				BB80E34C1F05270700CE018A /* Plane.swift */,
 				BB6E99261F0F6F6900134932 /* FilterProtocol.swift */,
 				BBD921141F0F7FB600106BF7 /* Filter.swift */,
@@ -311,6 +314,7 @@
 				35023C6619DDBB29006F3266 /* Shaders.metal in Sources */,
 				BBD921151F0F7FB600106BF7 /* Filter.swift in Sources */,
 				BB85AE2E1F0E2BBE00109861 /* GlobalFunction.swift in Sources */,
+				BBA8290C1F134C7C006FA316 /* GeometryVertexRenderer.swift in Sources */,
 				BB2886AB1F0F8AF3008CC06C /* CustomFilter.swift in Sources */,
 				BBD921131F0F7D3D00106BF7 /* MetalFilter.swift in Sources */,
 				BB80E3431F04F93700CE018A /* MTLTexture+Utils.swift in Sources */,

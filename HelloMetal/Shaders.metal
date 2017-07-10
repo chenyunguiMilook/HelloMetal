@@ -54,20 +54,29 @@ fragment float4 wireframe_fragment(constant float4 &color [[ buffer(0) ]]) {
     return color;
 }
 
-/*
-fragment half4 wireframe_fragment() {
-    return half4(1.0);
-}
-*/
+// MARK: - point shaders
 
-//vertex float4 wireframe_vertex(device VertexIn* points [[ buffer(0) ]],
-//                               unsigned int vid [[ vertex_id ]]) {
-//    return float4(points[vid].position, 1.0);
-//}
-//
-//fragment float4 wireframe_fragment(constant float4 &color [[ buffer(0) ]]) {
-//    return color;
-//}
+struct PointOut {
+    float4 position [[position]];
+    float pointSize [[point_size]];
+};
+
+vertex PointOut point_vertex(const device packed_float3* vertex_array [[ buffer(0) ]],
+                              unsigned int vertexID [[ vertex_id ]]) {
+    PointOut out;
+    out.position = float4(vertex_array[vertexID], 1.0);
+    out.pointSize = 25.0;
+    return out;
+}
+
+fragment float4 point_fragment(PointOut fragData [[stage_in]],
+                              constant float4 &color [[buffer(0)]],
+                              float2 pointCoord [[point_coord]]) {
+    if (length(pointCoord - float2(0.5)) > 0.5) {
+        discard_fragment();
+    }
+    return color;
+}
 
 
 

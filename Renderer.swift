@@ -26,6 +26,7 @@ public class Renderer : NSObject {
     var commandQueue: MTLCommandQueue!
     var model: Plane!
     var wireframeRender: GeometryWireframeRenderer!
+    var vertexRender: GeometryVertexRenderer!
     var texture: MTLTexture!
     var saturationFilter: CSaturationFilter!
     var blurFilter: GaussianBlurFilter!
@@ -46,6 +47,7 @@ public class Renderer : NSObject {
         self.model = Plane(library: library, pixelFormat: .bgra8Unorm, widthSegments: 4, heightSegments: 4)
         self.model.geometry.uvTransform = getUVTransformForFlippedVertically()
         self.wireframeRender = GeometryWireframeRenderer(name: "", library: library, pixelFormat: .bgra8Unorm, geometry: model.geometry, color: .green)
+        self.vertexRender = GeometryVertexRenderer(name: "", library: library, pixelFormat: .bgra8Unorm, geometry: model.geometry, color: .blue)
         self.texture = loadTexture(imageNamed: "cube.png", device: device)
         self.saturationFilter = CSaturationFilter(library: library, saturation: 2.0)
         self.blurFilter = GaussianBlurFilter(device: device, sigma: 5.0)
@@ -73,6 +75,7 @@ public class Renderer : NSObject {
         //self.blurFilter.filter(texture: filterResult, to: drawable.texture, in: commandBuffer)
         self.saturationFilter.filter(texture: filterResult, to: drawable.texture, in: commandBuffer)
         
+        self.vertexRender.render(commandBuffer: commandBuffer, destination: drawable.texture)
         self.wireframeRender.render(commandBuffer: commandBuffer, destination: drawable.texture)
         
         commandBuffer.present(drawable) // the present target could be a MTLTexture
